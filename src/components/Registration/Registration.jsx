@@ -11,8 +11,17 @@ function Registration() {
     fullName: "",
     contact: "",
     email: "",
-    address: "",
+    line1:"",
+    line2:"",
+    line3:"",
+    city:"",
+    state:"",
+    country:"",
+    pincode:"",
     userType: "customer", // Default user type
+    password:"",
+    confirmPassword:""
+  
   });
 
   const [errors, setErrors] = useState({});
@@ -42,10 +51,7 @@ function Registration() {
       valid = false;
     }
 
-    if (!formData.address.trim()) {
-      newErrors.address = "Address is required";
-      valid = false;
-    }
+    
 
     setErrors(newErrors);
     return valid;
@@ -55,31 +61,13 @@ function Registration() {
     e.preventDefault();
 
     if (validateForm()) {
-      // Send the registration data to your PHP API for database insertion
-      // try {
-        // const response = await axios.post(
-        //   "http://localhost/project_backend/registration.php",
-        //   formData, // Data to send in the request body
-        //   {
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //   }
-        // );
+     
         axios.post('http://localhost/project_backend/api/users.php', formData).then(function(response){
             console.log(response.data);
             navigate('/');
         });
 
-      //   if (response.status === 200) {
-      //     setSuccessMessage("Registration successful");
-      //     console.log("Registration successful");
-      //   } else {
-      //     console.error("Registration failed");
-      //   }
-      // } catch (error) {
-      //   console.error("Registration failed", error);
-      // }
+      
     }
   };
 
@@ -96,6 +84,7 @@ function Registration() {
               <label className="form-label">Full Name:</label>
               <input
                 type="text"
+                placeholder="Full name"
                 className={`form-control ${
                   errors.fullName ? "is-invalid" : ""
                 }`}
@@ -109,12 +98,29 @@ function Registration() {
                 <div className="invalid-feedback">{errors.fullName}</div>
               )}
             </div>
+            
+            <div className="mb-3">
+              <label className="form-label">Company Name:</label>
+              <input
+                type="text"
+                
+                name="companyName"
+                placeholder="company name"
+                value={formData.companyName}
+                onChange={(e) =>
+                  setFormData({ ...formData, companyName: e.target.value })
+                }
+              />
+              
+            </div>
+
             <div className="mb-3">
               <label className="form-label">Contact Number:</label>
               <input
                 type="text"
                 className={`form-control ${errors.contact ? "is-invalid" : ""}`}
                 name="contact"
+                placeholder="Contact Number"
                 value={formData.contact}
                 onChange={(e) =>
                   setFormData({ ...formData, contact: e.target.value })
@@ -130,6 +136,7 @@ function Registration() {
                 type="text"
                 className={`form-control ${errors.email ? "is-invalid" : ""}`}
                 name="email"
+                placeholder="email"
                 value={formData.email}
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
@@ -141,17 +148,97 @@ function Registration() {
             </div>
             <div className="mb-3">
               <label className="form-label">Address:</label>
+             
               <input
                 type="text"
-                className={`form-control ${errors.address ? "is-invalid" : ""}`}
-                name="address"
-                value={formData.address}
+                className={`form-control ${errors.line1 ? "is-invalid" : ""} mb-2`}
+                name="line1"
+                placeholder="line1"
+                value={formData.line1}
                 onChange={(e) =>
-                  setFormData({ ...formData, address: e.target.value })
+                  setFormData({ ...formData, line1: e.target.value })
                 }
               />
-              {errors.address && (
-                <div className="invalid-feedback">{errors.address}</div>
+                 {errors.line1 && (
+                <div className="invalid-feedback">{errors.line1}</div>
+              )}
+              <input
+                type="text"
+                className={`form-control ${errors.line2 ? "is-invalid" : ""} mb-2`}
+                name="line2"
+                placeholder="line2"
+                value={formData.line2}
+                onChange={(e) =>
+                  setFormData({ ...formData, line2: e.target.value })
+                }
+              />
+                 {errors.line2 && (
+                <div className="invalid-feedback">{errors.line2}</div>
+              )}
+              <input
+                type="text"
+                className={`form-control ${errors.line3 ? "is-invalid" : ""} mb-2`}
+                name="line3"
+                placeholder="line3"
+                value={formData.line3}
+                onChange={(e) =>
+                  setFormData({ ...formData,line3: e.target.value })
+                }
+              />
+                 {errors.line3 && (
+                <div className="invalid-feedback">{errors.line3}</div>
+              )}
+              <input
+                type="text"
+                className={`form-control ${errors.city ? "is-invalid" : ""} mb-2`}
+                name="city"
+                placeholder="city"
+                value={formData.city}
+                onChange={(e) =>
+                  setFormData({ ...formData, city: e.target.value })
+                }
+              />
+                 {errors.city && (
+                <div className="invalid-feedback">{errors.city}</div>
+              )}
+              <input
+                type="text"
+                className={`form-control ${errors.state ? "is-invalid" : ""} mb-2`}
+                name="state"
+                placeholder="state"
+                value={formData.state}
+                onChange={(e) =>
+                  setFormData({ ...formData, state: e.target.value })
+                }
+              />
+                 {errors.state && (
+                <div className="invalid-feedback">{errors.state}</div>
+              )}
+              <input
+                type="text"
+                className={`form-control ${errors.country ? "is-invalid" : ""} mb-2`}
+                name="country"
+                placeholder="country"
+                value={formData.country}
+                onChange={(e) =>
+                  setFormData({ ...formData, country: e.target.value })
+                }
+              />
+                 {errors.country && (
+                <div className="invalid-feedback">{errors.country}</div>
+              )}
+              <input
+                type="text"
+                className={`form-control ${errors.pincode ? "is-invalid" : ""} mb-2`}
+                name="pincode"
+                placeholder="pincode"
+                value={formData.pincode}
+                onChange={(e) =>
+                  setFormData({ ...formData, pincode: e.target.value })
+                }
+              />
+              {errors.pincode && (
+                <div className="invalid-feedback">{errors.pincode}</div>
               )}
             </div>
             <div className="mb-3">
@@ -159,6 +246,7 @@ function Registration() {
               <select
                 className="form-select"
                 name="userType"
+                
                 value={formData.userType}
                 onChange={(e) =>
                   setFormData({ ...formData, userType: e.target.value })
@@ -168,24 +256,23 @@ function Registration() {
                 <option value="supervisor">Supervisor</option>
                 <option value="admin">Admin</option>
                 <option value="superAdmin">Super Admin</option>
+                <option value="vendor">vendor</option>
+                <option value="logistics">logistics</option>
+
               </select>
             </div>
             <div className="mb-3">
               <label className="form-label">Password:</label>
               <input
                 type="password"
-                className={`form-control ${
-                  errors.password ? "is-invalid" : ""
-                }`}
+                className={`form-control ${errors.password ? "is-invalid" : ""}`}
                 name="password"
                 value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
               />
-              {errors.password && (
-                <div className="invalid-feedback">{errors.password}</div>
-              )}
+              {errors.password && <div className="invalid-feedback">{errors.password}</div>}
             </div>
 
             <div className="mb-3">
@@ -207,10 +294,11 @@ function Registration() {
             </div>
 
             <div className="text-center">
-              <button type="submit"   className="btn btn-primary mx-auto">
-                Sing up
+              <button type="submit" className="btn btn-primary mx-auto">
+                Sign up
               </button>
             </div>
+
             <h4>
               {" "}
               already have an accoutn ?.<Link to="/login">Login</Link>
