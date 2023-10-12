@@ -31,8 +31,7 @@ function App() {
       <Route path="/update" element={<Update/>} /> 
       <Route path="/registration" element={<Registration />} />
       <Route path="/user" element={<ListUser />} />
-      <Route path="/login" element={<Login />} />
-    
+      <Route path="/login" element={<Login />} />    
     </Routes>
   </div>
 </div>

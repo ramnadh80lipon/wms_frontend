@@ -10,9 +10,13 @@ import {
   LogoutOutlined,
   UserOutlined,
   DownOutlined,
+  ShoppingCartOutlined,
+  UserAddOutlined ,
+  LineChartOutlined,
 } from "@ant-design/icons";
+
 import icon from "../icons/icon_1.png";
-import {div } from "react-bootstrap";
+import { div } from "react-bootstrap";
 import SubMenu from "antd/es/menu/SubMenu";
 const Navbar = ({ isLoggedIn, onLogout }) => {
   const [activeMenu, setActiveMenu] = useState(true);
@@ -36,11 +40,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
     }
   }, [screenSize]);
   const user = localStorage.getItem("token");
-  const item = [
-    1,2,3
-  ]
-
-
+  const item = [1, 2, 3];
 
   return (
     <div className="nav-container">
@@ -57,68 +57,103 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
         </Button>
       </div>
       {activeMenu && (
-        <Menu theme="dark"  className="custom-menu">
+        <Menu theme="dark" className="custom-menu">
           <Menu.Item icon={<HomeOutlined />}>
-            <Link to="/">Home</Link>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              Home
+            </Link>
           </Menu.Item>
           <Menu.Item icon={<FundOutlined />}>
-            <Link to="/products">Products</Link>
+            <Link to="/products" style={{ textDecoration: "none" }}>
+              Products
+            </Link>
           </Menu.Item>
-          
 
-
-        
           <SubMenu key="purchase" icon={<BulbOutlined />} title="Purchase">
             <Menu.Item key="vendors">
-              <Link to="/addVendor">Vendors</Link>
+              <Link to="/addVendor" style={{ textDecoration: "none" }}>
+                Vendors
+              </Link>
             </Menu.Item>
             <Menu.Item key="purchase-orders">
-              <Link to="/purchase-orders">Purchase Orders</Link>
+              <Link to="/purchase-orders" style={{ textDecoration: "none" }}>
+                Purchase Orders
+              </Link>
             </Menu.Item>
             <Menu.Item key="purchase-receives">
-              <Link to="/purchase-receives">Purchase Receives</Link>
+              <Link to="/purchase-receives" style={{ textDecoration: "none" }}>
+                Purchase Receives
+              </Link>
             </Menu.Item>
             <Menu.Item key="purchase-bills">
-              <Link to="/purchase-bills">Purchase Bills</Link>
+              <Link to="/purchase-bills" style={{ textDecoration: "none" }}>
+                Purchase Bills
+              </Link>
             </Menu.Item>
-            
           </SubMenu>
 
-          <Menu.Item icon={<BulbOutlined />}>
-            <Link to="/news">Sales</Link>
-          </Menu.Item>
-          <SubMenu icon={<BulbOutlined />}
-                   title={<span>Inventory_Stock</span>}>
-            <Menu.Item icon={<BulbOutlined />}>
-                  <Link to="/items">Items</Link>
-            </Menu.Item>
-            <Menu.Item icon={<BulbOutlined />}> 
-                  <Link to="/items">Item Groups</Link>
-            </Menu.Item>
-            <Menu.Item icon={<BulbOutlined />}>
-                  <Link to="/Inventory Adjustment">Inventory Adjustment</Link>
-            </Menu.Item>
 
+          <SubMenu key="sales" icon={<ShoppingCartOutlined />} title="Sales">
+            <Menu.Item key="sales"  icon={<UserAddOutlined />}>
+              <Link to="/news" style={{ textDecoration: "none" }}>
+                Customer
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="sales"  icon={<LineChartOutlined />}>
+              <Link to="/news" style={{ textDecoration: "none" }}>
+                Sales
+              </Link>
+            </Menu.Item>
+            </SubMenu>
 
+          
+          <SubMenu icon={<BulbOutlined />} title={<span>Inventory Stock</span>}>
+            <Menu.Item icon={<BulbOutlined />}>
+              <Link to="/items" style={{ textDecoration: "none" }}>
+                Items
+              </Link>
+            </Menu.Item>
+            <Menu.Item icon={<BulbOutlined />}>
+              <Link to="/items" style={{ textDecoration: "none" }}>
+                Item Groups
+              </Link>
+            </Menu.Item>
+            <Menu.Item icon={<BulbOutlined />}>
+              <Link
+                to="/Inventory Adjustment"
+                style={{ textDecoration: "none" }}
+              >
+                Inventory Adjustment
+              </Link>
+            </Menu.Item>
           </SubMenu>
           <Menu.Item icon={<BulbOutlined />}>
-            <Link to="/news">Warehouse</Link>
+            <Link to="/news" style={{ textDecoration: "none" }}>
+              Warehouse
+            </Link>
           </Menu.Item>
           <Menu.Item icon={<BulbOutlined />}>
-            <Link to="/news">Logistics</Link>
+            <Link to="/news" style={{ textDecoration: "none" }}>
+              Logistics
+            </Link>
           </Menu.Item>
           <Menu.Item icon={<BulbOutlined />}>
-            <Link to="/news">Finances</Link>
+            <Link to="/news" style={{ textDecoration: "none" }}>
+              Finances
+            </Link>
           </Menu.Item>
-
 
           {user ? (
             <Menu.Item icon={<UserOutlined />}>
-              <Link to="/profile">Profile</Link>
+              <Link to="/profile" style={{ textDecoration: "none" }}>
+                Profile
+              </Link>
             </Menu.Item>
           ) : (
             <Menu.Item icon={<LogoutOutlined />}>
-              <Link to="/signin">LogIn</Link>
+              <Link to="/signin" style={{ textDecoration: "none" }}>
+                LogIn
+              </Link>
             </Menu.Item>
           )}
           {isLoggedIn && (
