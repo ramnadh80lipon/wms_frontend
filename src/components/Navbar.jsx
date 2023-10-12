@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Menu, Typography, Avatar } from "antd";
+import { Button, Menu, Typography, Avatar, Dropdown } from "antd";
 import { Link } from "react-router-dom";
 import {
   HomeOutlined,
@@ -9,8 +9,12 @@ import {
   MenuOutlined,
   LogoutOutlined,
   UserOutlined,
+  DownOutlined,
 } from "@ant-design/icons";
 import icon from "../icons/icon_1.png";
+import {div } from "react-bootstrap";
+import SubMenu from "antd/es/menu/SubMenu";
+import "./Navbar.css"
 const Navbar = ({ isLoggedIn, onLogout }) => {
   const [activeMenu, setActiveMenu] = useState(true);
   const [screenSize, setScreenSize] = useState(undefined);
@@ -33,6 +37,12 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
     }
   }, [screenSize]);
   const user = localStorage.getItem("token");
+  const item = [
+    1,2,3
+  ]
+
+
+
   return (
     <div className="nav-container">
       <div className="logo-container">
@@ -48,23 +58,50 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
         </Button>
       </div>
       {activeMenu && (
-        <Menu theme="dark">
+        <Menu theme="dark"  className="custom-menu">
           <Menu.Item icon={<HomeOutlined />}>
             <Link to="/">Home</Link>
           </Menu.Item>
           <Menu.Item icon={<FundOutlined />}>
             <Link to="/products">Products</Link>
           </Menu.Item>
+          
 
-          <Menu.Item icon={<BulbOutlined />}>
-            <Link to="/news">purchase</Link>
-          </Menu.Item>
+
+        
+          <SubMenu key="purchase" icon={<BulbOutlined />} title="Purchase">
+            <Menu.Item key="vendors">
+              <Link to="/addVendor">Vendors</Link>
+            </Menu.Item>
+            <Menu.Item key="purchase-orders">
+              <Link to="/purchase-orders">Purchase Orders</Link>
+            </Menu.Item>
+            <Menu.Item key="purchase-receives">
+              <Link to="/purchase-receives">Purchase Receives</Link>
+            </Menu.Item>
+            <Menu.Item key="purchase-bills">
+              <Link to="/purchase-bills">Purchase Bills</Link>
+            </Menu.Item>
+            
+          </SubMenu>
+
           <Menu.Item icon={<BulbOutlined />}>
             <Link to="/news">Sales</Link>
           </Menu.Item>
-          <Menu.Item icon={<BulbOutlined />}>
-            <Link to="/news">Inventory_stocks</Link>
-          </Menu.Item>
+          <SubMenu icon={<BulbOutlined />}
+                   title={<span>Inventory_Stock</span>}>
+            <Menu.Item icon={<BulbOutlined />}>
+                  <Link to="/items">Items</Link>
+            </Menu.Item>
+            <Menu.Item icon={<BulbOutlined />}> 
+                  <Link to="/items">Item Groups</Link>
+            </Menu.Item>
+            <Menu.Item icon={<BulbOutlined />}>
+                  <Link to="/Inventory Adjustment">Inventory Adjustment</Link>
+            </Menu.Item>
+
+
+          </SubMenu>
           <Menu.Item icon={<BulbOutlined />}>
             <Link to="/news">Warehouse</Link>
           </Menu.Item>

@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Modal, Alert } from "react-bootstrap";
+import { Card, Button, Modal, Alert,Dropdown } from "react-bootstrap";
 import Add from "./PRODUCT_CRUD/Add";
 import axios from "axios";
 import { Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined ,EditOutlined} from "@ant-design/icons";
+import { useNavigate ,Link} from "react-router-dom";
+import ProductCard from "./PRODUCT_CRUD/Update";
+import './product.css';
+
+
+
 
 
 
@@ -13,6 +19,13 @@ const Product = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [error, setError] = useState(null);
   const [searchItem, setSearchItem] = useState("");
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [handleCloseEditForm, sethandleCloseEditForm] = useState(false);
+
+  
+
+ 
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -30,6 +43,8 @@ const Product = () => {
       .catch((error) => {
         setError(error.message);
       });
+      
+
   }, []);
 
   const handleShowAddModal = () => {
@@ -44,11 +59,31 @@ const Product = () => {
     setSelectedProduct(product);
   };
 
+  const handleEditClick = () => {
+    setShowEditForm(true);
+    console.log("edit button clicked"); 
+
+  };
+
+
   const handleCloseProductModal = () => {
     setSelectedProduct(null);
 
 
+
   };
+
+
+  const [selectedItem, setSelectedItem] = useState("Active Items");
+
+  const handleItemClick = (e) =>{
+    setSelectedItem(e);
+  }
+  
+
+
+
+
   const searchProductsStyles = {
     marginBottom: '20px',
     display: 'flex',
@@ -65,11 +100,80 @@ const Product = () => {
     width: '75px'
   };
 
+  
+
   return (
     <>
     
       <h1 className=" text-center">Product Dashboard</h1>
-      <div className="search-products" style={searchProductsStyles}>
+      
+      <div className="row p-3">
+      <div className="col-3">
+           <Dropdown>
+             <Dropdown.Toggle variant="light" id="dropdownMenuButton" className="dropdown-toggle-custom">
+                {selectedItem}
+             </Dropdown.Toggle>
+             <Dropdown.Menu  style={{maxHeight:"200px",overflowY:"auto"}}>
+              
+               <Dropdown.Item onClick={() => handleItemClick('All Items')}>
+                 <Link to="/" className="Dropdown-link">All Items</Link>
+               </Dropdown.Item>
+               <Dropdown.Item onClick={() => handleItemClick('Active Items')}>
+                 <Link to="/" className="Dropdown-link">Active Items</Link>
+               </Dropdown.Item>
+               <Dropdown.Item onClick={() => handleItemClick('Ungrouped Items')}>
+                 <Link to="/" className="Dropdown-link">Ungrouped Items</Link>
+               </Dropdown.Item>
+               <Dropdown.Item onClick={() => handleItemClick('Low stock Items')}>
+                 <Link to="/" className="Dropdown-link">Low Stock Items</Link>
+               </Dropdown.Item>
+               <Dropdown.Item onClick={() => handleItemClick('Sales')}>
+                 <Link to="/" className="Dropdown-link">Sales</Link>
+               </Dropdown.Item>
+               <Dropdown.Item onClick={() => handleItemClick('Purchases')}>
+                 <Link to="/" className="Dropdown-link">Purchases</Link>
+               </Dropdown.Item>
+               <Dropdown.Item onClick={() => handleItemClick('Inventory Items')}>
+                 <Link to="/" className="Dropdown-link">Inventory Items</Link>
+               </Dropdown.Item>
+               <Dropdown.Item onClick={() => handleItemClick('Non-Inventory Items')}>
+                 <Link to="/" className="Dropdown-link">Non-Inventory Items</Link>
+               </Dropdown.Item>
+               <Dropdown.Item onClick={() => handleItemClick('Services')}>
+                 <Link to="/" className="Dropdown-link">Services</Link>
+               </Dropdown.Item>
+
+             </Dropdown.Menu>
+           </Dropdown>
+           </div>
+       
+      <div className="col-9 d-flex justify-content-end">
+        <Link to="/ListProduct">
+          <Button variant="primary">
+          <i className='bi bi-plus-circle p-2'></i>New
+        </Button>
+        </Link>
+          <div className="icon-container rounded">
+              <i className="bi bi-list icon"></i>
+              <i className="bi bi-microsoft icon"></i>
+          </div>
+
+          <div className="icon-container rounded-top">
+          <i class="bi bi-three-dots"></i>
+          </div>
+          <div className="icon-container rounded-left">
+          <i class="bi bi-question-lg"></i>
+          </div>
+         
+
+        
+
+       </div>
+      </div>
+      <hr></hr>
+
+
+    <div className="search-products" style={searchProductsStyles}>
       <Input
         placeholder="Search Products by name"
         onChange={(e) => setSearchItem(e.target.value.toLowerCase())}
@@ -127,24 +231,35 @@ const Product = () => {
         <Modal.Body>
           {selectedProduct && (
             <>
-              <h2>{selectedProduct.PRODUCT_NAME}</h2>
-              <img
-                src={selectedProduct.productImagePath}
-                alt={selectedProduct.PRODUCT_NAME}
-                style={{ width: "100px", height: "130px" }}
+                <h2>{selectedProduct.PRODUCT_NAME}</h2>
+                <img
+                  src={selectedProduct.productImagePath}
+                  alt={selectedProduct.PRODUCT_NAME}
+                  style={{ width: "100px", height: "130px" }}
+                />
+                <p>Description: {selectedProduct.DESCRIPTION}</p>
+                <p>Price: INR {selectedProduct.PRICE}</p>
+                <p>Quantity: 45</p>
+                <p>Vendor Id : {selectedProduct.VENDOR_ID}</p>
+                <p>Warehouse Id : {selectedProduct.WAREHOUSE_ID}</p>
+                <p>Product Id : {selectedProduct.PRODUCT_ID}</p>
+                <p>product status : {selectedProduct.PRODUCT_STATUS}</p>
+                <img
+                  src={selectedProduct.qrCodeImagePath}
+                  alt={selectedProduct.PRODUCT_STATUS}
+                  style={{ width: "100px", height: "130px" }}
+                />
+              <lable for="edit">Edit</lable>
+              
+              <button className="btn btn-primary" onClick={handleEditClick}><EditOutlined /></button>
+              {showEditForm && (
+              <ProductCard
+                selectedProduct={selectedProduct}
+                
+                onClose={handleCloseEditForm}
               />
-              <p>Description: {selectedProduct.DESCRIPTION}</p>
-              <p>Price: INR {selectedProduct.PRICE}</p>
-              <p>Quantity: 45</p>
-              <p>Vendor Id : {selectedProduct.VENDOR_ID}</p>
-              <p>Warehouse Id : {selectedProduct.WAREHOUSE_ID}</p>
-              <p>Product Id : {selectedProduct.PRODUCT_ID}</p>
-              <p>product status : {selectedProduct.PRODUCT_STATUS}</p>
-              <img
-                src={selectedProduct.qrCodeImagePath}
-                alt={selectedProduct.PRODUCT_STATUS}
-                style={{ width: "100px", height: "130px" }}
-              />
+            )}
+              
             </>
           )}
         </Modal.Body>

@@ -4,30 +4,19 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import Homepage from './components/Homepage';
+import Update from './components/PRODUCT_CRUD/Update';
 import ListUser from './ListUser';
 import Product from './components/product';
 import Navbar from './components/Navbar.jsx'; // Import your Navbar component
 import './App.css';
+import Catalog from './components/PRODUCTS/Catalog';
+import Listproduct from './components/PRODUCT_CRUD/Listproduct';
+import AddVendor from './components/purchases/AddVendor';
 
 
 function App() {
   return (
-    // <Router> {/* Ensure that the entire app is wrapped within the Router */}
-    //   <div className='App'>
-    //     <div className="Navbar">
-    //       <Navbar />
-    //     </div>
-
-    //     <div className="Homepage">
-    //       <Routes>
-    //         <Route path="/registration" element={<Registration />} />
-    //         <Route path="/user" element={<ListUser />} />
-    //         <Route path="/login" element={<Login />} />
-    //         <Route path="/" element={<Product />} />
-    //       </Routes>
-    //     </div>
-    //   </div>
-    // </Router>
+    
 
 <Router>
 <div className='app-container'>
@@ -37,10 +26,14 @@ function App() {
   <div className="content-container">
     <Routes>
       <Route path="/" element={<Product />} />
+      <Route path="/listProduct" element={<Listproduct />} />
+      <Route path="/addVendor" element={<AddVendor/>} />
+      <Route path="/products" element={<Catalog/>} /> 
+      <Route path="/update" element={<Update/>} /> 
       <Route path="/registration" element={<Registration />} />
       <Route path="/user" element={<ListUser />} />
       <Route path="/login" element={<Login />} />
-      {/* Add more routes for other components */}
+    
     </Routes>
   </div>
 </div>

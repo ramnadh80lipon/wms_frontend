@@ -79,7 +79,7 @@ a:hover{
 
 .app-container {
     display: flex;
-    height: 100vh; /* 100% of the viewport height */
+    height: 100vh; 
   }
   
   .navbar-container {
@@ -92,7 +92,7 @@ a:hover{
   }
   
   .content-container {
-    flex: 1; /* Allow the content to expand and take remaining space */
+    flex: 1; 
     padding: 20px;
     width:200px;
     height: 100vh;

@@ -14,7 +14,7 @@ function ProductForm() {
 
   const [productImage, setProductImage] = useState(null);
   const [qrCodeImage, setQRCodeImage] = useState(null);
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false); // State for success alert
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false); 
 
 
   const handleInputChange = (e) => {
@@ -59,7 +59,7 @@ function ProductForm() {
       if (response.status === 200) {
         console.log('Product added successfully.');
         setShowSuccessAlert(true);
-        // Reset form or show a success message
+      
       } else {
         console.error('Product addition failed.');
       }

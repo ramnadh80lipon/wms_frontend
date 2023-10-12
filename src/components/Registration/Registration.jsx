@@ -64,7 +64,7 @@ function Registration() {
      
         axios.post('http://localhost/project_backend/api/users.php', formData).then(function(response){
             console.log(response.data);
-            navigate('/');
+            navigate('/login');
         });
 
       
