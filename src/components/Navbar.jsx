@@ -93,14 +93,14 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
           </SubMenu>
 
 
-          <SubMenu key="sales" icon={<ShoppingCartOutlined />} title="Sales">
-            <Menu.Item key="sales"  icon={<UserAddOutlined />}>
-              <Link to="/news" style={{ textDecoration: "none" }}>
+          <SubMenu key="sales"  title="Sales" icon={<ShoppingCartOutlined/>}>
+            <Menu.Item key="addnewcustomer"  icon={<UserAddOutlined />}>
+              <Link to="/addnewcustomer" style={{ textDecoration: "none" }}>
                 Customer
               </Link>
             </Menu.Item>
             <Menu.Item key="sales"  icon={<LineChartOutlined />}>
-              <Link to="/news" style={{ textDecoration: "none" }}>
+              <Link to="/addsales" style={{ textDecoration: "none" }}>
                 Sales
               </Link>
             </Menu.Item>

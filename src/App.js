@@ -11,8 +11,8 @@ import './App.css';
 import Catalog from './components/PRODUCTS/Catalog';
 import Listproduct from './components/PRODUCT_CRUD/Listproduct';
 import AddVendor from './components/purchases/AddVendor';
-
-
+import AddSales from './components/sales/AddSales';
+import AddNewCustomer from './components/customer/AddNewCustomer';
 function App() {
   return (
     
@@ -32,6 +32,8 @@ function App() {
       <Route path="/registration" element={<Registration />} />
       <Route path="/user" element={<ListUser />} />
       <Route path="/login" element={<Login />} />    
+      <Route path="/addnewcustomer" element={<AddNewCustomer/>} />
+      <Route path="/addsales" element={<AddSales/>} />
     </Routes>
   </div>
 </div>
