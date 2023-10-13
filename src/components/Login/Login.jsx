@@ -12,13 +12,13 @@ function Login() {
         backgroundRepeat: 'no-repeat',
         height: '100vh',
         display: 'flex',
-        flexDirection: 'row', // Set to column layout
+        flexDirection: 'row', 
         justifyContent: 'center',
         alignItems: 'center',
       }}
     >
       
-      {/* Welcome Message */}
+      
       <div
         className="text-center"
         style={{
@@ -28,7 +28,7 @@ function Login() {
           fontFamily: 'roboto slab',
           marginBottom: '20px',
           
-           // Add margin to separate from login card
+           
         }}
       >
         <h4 className="card-title">Welcome to</h4>
