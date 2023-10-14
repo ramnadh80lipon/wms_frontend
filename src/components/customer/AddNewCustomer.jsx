@@ -39,7 +39,7 @@ function AddNewCustomer() {
     shippingaddressfax: "",
   });
   return (
-    <div>
+    <div style={{overflow:"hidden"}}>
       <h4>Add New Customer</h4>
       <div>
         <label htmlFor="" style={{ paddingRight: "25px" }}>
@@ -59,7 +59,7 @@ function AddNewCustomer() {
         <label htmlFor="">Customer Name:</label>
         <Space wrap>
           <Select
-            placeholder="Salutation"
+            placeholder="Salutation" 
             style={{ margin: "10px", width: 120 }}
             onChange={(value) =>
               setFormData({ ...formData, salutation: value })
@@ -665,8 +665,8 @@ function AddNewCustomer() {
         </div>
       </div>
 
-      <div>
-        <Button type="primary" size="large">
+      <div style={{backgroundColor:"white",display:"block",padding:"1%",width:"100%",position:"fixed",bottom:"0",margin:"auto"}}>
+        <Button type="primary" size="large" >
           Save
         </Button>
         <Button
