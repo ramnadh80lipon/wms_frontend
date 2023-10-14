@@ -99,9 +99,9 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                 Customer
               </Link>
             </Menu.Item>
-            <Menu.Item key="sales"  icon={<LineChartOutlined />}>
-              <Link to="/addsales" style={{ textDecoration: "none" }}>
-                Sales
+            <Menu.Item key="sales-order"  icon={<LineChartOutlined />}>
+              <Link to="/addSalesOrder" style={{ textDecoration: "none" }}>
+                Sales Orders
               </Link>
             </Menu.Item>
             </SubMenu>
