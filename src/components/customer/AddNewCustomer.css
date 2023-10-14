@@ -1,0 +1,44 @@
+div label{
+    padding-right: 25px;
+}
+.salutation{
+    margin: 10px;
+    width:120px
+}
+.name input{
+    width: 25vw;
+    display: inline-block;
+    margin: 1%;
+}
+.companyname{
+    width: 65vw;
+    margin: 1%;
+    display:inline-block;
+}
+.email input{
+    width: 25vw;
+    margin:1%;
+    display: inline-block;
+}
+.phone input{
+    width: 25vw;
+    margin: 1%;
+    display: inline-block;
+
+
+}
+
+.nav ol{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+ol li{
+   list-style-type: none;
+   display: inline-block;
+   text-decoration: none;
+      
+}
+li a{
+    text-decoration: none;
+}

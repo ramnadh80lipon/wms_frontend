@@ -17,19 +17,12 @@ function Login() {
         alignItems: 'center',
       }}
     >
-      
-      
-      <div
-        className="text-center"
-        style={{
-            color: 'white',
-            fontSize: '200px',
+      <div style={{fontSize: '200px',
           padding: '50px',
           fontFamily: 'roboto slab',
           marginBottom: '20px',
-          
-           
-        }}
+    }}
+            
       >
         <h4 className="card-title">Welcome to</h4>
         <h2 className="card-subtitle mb-2">WMS</h2>
