@@ -11,8 +11,15 @@ import {
   UserOutlined,
   DownOutlined,
   ShoppingCartOutlined,
-  UserAddOutlined ,
+  UserAddOutlined,
   LineChartOutlined,
+  AppstoreOutlined,
+  ContainerOutlined,
+  DesktopOutlined,
+  MailOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  PieChartOutlined,
 } from "@ant-design/icons";
 
 import icon from "../icons/icon_1.png";
@@ -21,6 +28,16 @@ import SubMenu from "antd/es/menu/SubMenu";
 const Navbar = ({ isLoggedIn, onLogout }) => {
   const [activeMenu, setActiveMenu] = useState(true);
   const [screenSize, setScreenSize] = useState(undefined);
+
+  function getItem(label, key, icon, children, type) {
+    return {
+      key,
+      icon,
+      children,
+      label,
+      type,
+    };
+  }
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -92,21 +109,19 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
             </Menu.Item>
           </SubMenu>
 
-
-          <SubMenu key="sales"  title="Sales" icon={<ShoppingCartOutlined/>}>
-            <Menu.Item key="addnewcustomer"  icon={<UserAddOutlined />}>
+          <SubMenu key="sales" title="Sales" icon={<ShoppingCartOutlined />}>
+            <Menu.Item key="addnewcustomer" icon={<UserAddOutlined />}>
               <Link to="/addnewcustomer" style={{ textDecoration: "none" }}>
                 Customer
               </Link>
             </Menu.Item>
-            <Menu.Item key="sales"  icon={<LineChartOutlined />}>
+            <Menu.Item key="sales" icon={<LineChartOutlined />}>
               <Link to="/addsales" style={{ textDecoration: "none" }}>
                 Sales
               </Link>
             </Menu.Item>
-            </SubMenu>
+          </SubMenu>
 
-          
           <SubMenu icon={<BulbOutlined />} title={<span>Inventory Stock</span>}>
             <Menu.Item icon={<BulbOutlined />}>
               <Link to="/items" style={{ textDecoration: "none" }}>
