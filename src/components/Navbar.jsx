@@ -3,17 +3,26 @@ import { Button, Menu, Typography, Avatar } from "antd";
 import { Link } from "react-router-dom";
 import {
   HomeOutlined,
-  MoneyCollectOutlined,
-  BulbOutlined,
-  FundOutlined,
+  DollarOutlined,
   MenuOutlined,
   LogoutOutlined,
   UserOutlined,
   ShoppingCartOutlined,
   UserAddOutlined,
   LineChartOutlined,
+  AppstoreAddOutlined,
+  UnorderedListOutlined,
+  SettingOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
-
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import DescriptionIcon from "@mui/icons-material/Description";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import LoginIcon from "@mui/icons-material/Login";
+import StorageIcon from "@mui/icons-material/Storage";
+import StorefrontIcon from "@mui/icons-material/Storefront";
+import CategoryIcon from "@mui/icons-material/Category";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 import icon from "../icons/icon_1.png";
 
 const Navbar = ({ isLoggedIn, onLogout }) => {
@@ -82,7 +91,10 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                 Home
               </Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<FundOutlined />}>
+            <Menu.Item
+              key="2"
+              icon={<CategoryIcon style={{ fontSize: "1.2rem" }} />}
+            >
               <Link to="/products" style={{ textDecoration: "none" }}>
                 Products
               </Link>
@@ -90,20 +102,29 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
 
             <Menu.SubMenu
               key="purchase"
-              icon={<BulbOutlined />}
+              icon={<ShoppingCartOutlined />}
               title="Purchase"
             >
-              <Menu.Item key="vendors">
+              <Menu.Item
+                key="vendors"
+                icon={<TeamOutlined style={{ fontSize: "1rem" }} />}
+              >
                 <Link to="/addVendor" style={{ textDecoration: "none" }}>
                   Vendors
                 </Link>
               </Menu.Item>
-              <Menu.Item key="purchase-orders">
+              <Menu.Item
+                key="purchase-orders"
+                icon={<DescriptionIcon style={{ fontSize: "1rem" }} />}
+              >
                 <Link to="/purchase-orders" style={{ textDecoration: "none" }}>
                   Purchase Orders
                 </Link>
               </Menu.Item>
-              <Menu.Item key="purchase-receives">
+              <Menu.Item
+                key="purchase-receives"
+                icon={<AssignmentIcon style={{ fontSize: "1rem" }} />}
+              >
                 <Link
                   to="/purchase-receives"
                   style={{ textDecoration: "none" }}
@@ -111,7 +132,10 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                   Purchase Receives
                 </Link>
               </Menu.Item>
-              <Menu.Item key="purchase-bills">
+              <Menu.Item
+                key="purchase-bills"
+                icon={<DescriptionIcon style={{ fontSize: "1rem" }} />}
+              >
                 <Link to="/purchase-bills" style={{ textDecoration: "none" }}>
                   Purchase Bills
                 </Link>
@@ -120,7 +144,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
 
             <Menu.SubMenu
               key="sales"
-              icon={<ShoppingCartOutlined />}
+              icon={<LineChartOutlined />}
               title="Sales"
             >
               <Menu.Item key="addnewcustomer" icon={<UserAddOutlined />}>
@@ -128,24 +152,57 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                   Customer
                 </Link>
               </Menu.Item>
-              <Menu.Item key="sales-order" icon={<LineChartOutlined />}>
+              <Menu.Item
+                key="sales-order"
+                icon={<EditNoteIcon style={{ fontSize: "1.2rem" }} />}
+              >
                 <Link to="/addSalesOrder" style={{ textDecoration: "none" }}>
                   Sales Orders
                 </Link>
               </Menu.Item>
             </Menu.SubMenu>
+            <Menu.SubMenu
+              key="inventory"
+              icon={<StorageIcon style={{ fontSize: "1rem" }} />}
+              title="Inventory"
+            >
+              <Menu.Item key="item" icon={<AppstoreAddOutlined />}>
+                <Link to="/items" style={{ textDecoration: "none" }}>
+                  Items
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="itemgroups" icon={<UnorderedListOutlined />}>
+                <Link to="/items" style={{ textDecoration: "none" }}>
+                  Item Groups
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="inventoryadjustment" icon={<SettingOutlined />}>
+                <Link
+                  to="/inventoryadjustment"
+                  style={{ textDecoration: "none" }}
+                >
+                  Inventory Adjustment
+                </Link>
+              </Menu.Item>
+            </Menu.SubMenu>
 
-            <Menu.Item key="3" icon={<BulbOutlined />}>
+            <Menu.Item
+              key="3"
+              icon={<StorefrontIcon style={{ fontSize: "1.2rem" }} />}
+            >
               <Link to="/news" style={{ textDecoration: "none" }}>
                 Warehouse
               </Link>
             </Menu.Item>
-            <Menu.Item key="4" icon={<BulbOutlined />}>
+            <Menu.Item
+              key="4"
+              icon={<LocalShippingIcon style={{ fontSize: "1.2rem" }} />}
+            >
               <Link to="/news" style={{ textDecoration: "none" }}>
                 Logistics
               </Link>
             </Menu.Item>
-            <Menu.Item key="5" icon={<BulbOutlined />}>
+            <Menu.Item key="5" icon={<DollarOutlined />}>
               <Link to="/news" style={{ textDecoration: "none" }}>
                 Finances
               </Link>
@@ -158,7 +215,10 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                 </Link>
               </Menu.Item>
             ) : (
-              <Menu.Item key="7" icon={<LogoutOutlined />}>
+              <Menu.Item
+                key="7"
+                icon={<LoginIcon style={{ fontSize: "1.2rem" }} />}
+              >
                 <Link to="/signin" style={{ textDecoration: "none" }}>
                   LogIn
                 </Link>
