@@ -7,7 +7,9 @@ import { SearchOutlined, EditOutlined } from "@ant-design/icons";
 import { useNavigate, Link } from "react-router-dom";
 import ProductCard from "./PRODUCT_CRUD/Update";
 import "./product.css";
-
+import amazonpng from "../assets/Icons/amazon.png"
+import warehousepng from "../assets/Icons/warehouse.png"
+import noonlogo from "../assets/Icons/noonlogo.png"
 const Product = () => {
   const [products, setProducts] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -16,6 +18,15 @@ const Product = () => {
   const [searchItem, setSearchItem] = useState("");
   const [showEditForm, setShowEditForm] = useState(false);
   const [handleCloseEditForm, sethandleCloseEditForm] = useState(false);
+  // State for Quantity Modal
+  const [showQuantityModal, setShowQuantityModal] = useState(false);
+
+  // Quantities for Amazon, Warehouse, and Inventory
+  const [quantities, setQuantities] = useState({
+    amazon: 100,
+    warehouse: 200,
+    inventory: 50,
+  });
 
   const navigate = useNavigate();
 
@@ -56,7 +67,16 @@ const Product = () => {
   const handleCloseProductModal = () => {
     setSelectedProduct(null);
   };
-
+  const handleShowQuantityModal = () => {
+    
+    setShowQuantityModal(true);
+  };
+  
+  // Function to close the Quantity Modal
+  const handleCloseQuantityModal = () => {
+    
+    setShowQuantityModal(false);
+  };
   const [selectedItem, setSelectedItem] = useState("Active Items");
 
   const handleItemClick = (e) => {
@@ -217,34 +237,86 @@ const Product = () => {
 
       <Modal show={selectedProduct !== null} onHide={handleCloseProductModal}>
         <Modal.Header closeButton>
-          <Modal.Title style={{textAlign:"center",display:"block",width:"100%"}}>Product Details</Modal.Title>
+          <Modal.Title
+            style={{ textAlign: "center", display: "block", width: "100%" }}
+          >
+            Product Details
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+        <Modal.Body
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
           {selectedProduct && (
             <>
               <h2>{selectedProduct.PRODUCT_NAME}</h2>
               <img
                 src={selectedProduct.image}
                 alt={selectedProduct.title}
-                style={{ width: "100px",margin:"20px" }}
+                style={{ width: "100px", margin: "20px" }}
               />
-              <p><span>Description:</span> {selectedProduct.description}</p>
-              <p><span>Price: </span> {selectedProduct.price}/-</p>
-              <p><span>Quantity:</span> 45</p>
-              <p><span>Vendor Id :</span> {selectedProduct.VENDOR_ID}</p>
-              <p><span>Warehouse Id :</span> {selectedProduct.WAREHOUSE_ID}</p>
-              <p><span>Product Id :</span> {selectedProduct.PRODUCT_ID}</p>
-              <p><span>product status :</span> {selectedProduct.PRODUCT_STATUS}</p>
+              <p>
+                <span>Description:</span> {selectedProduct.description}
+              </p>
+              <p>
+                <span>Price: </span> {selectedProduct.price}/-
+              </p>
+              <a href="#" style={{textDecoration:"none",color:"black"}}><p onClick={handleShowQuantityModal} >
+                <span>Quantity:</span> 45
+              </p></a>
+
+              <Modal show={showQuantityModal} onHide={handleCloseQuantityModal} style={{height:"100vh"}} >
+                <Modal.Header closeButton>
+                  <Modal.Title style={{ textAlign: "center",display:"block",width:"100%" }}>Quantity Details</Modal.Title>
+                </Modal.Header>
+                <Modal.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                  <div >
+                    <a href="/amazon" style={{textDecoration:"none"}}>
+                      <img src={amazonpng} style={{height:"100px",margin:"20px"}} alt="Amazon" />
+                      <p style={{textDecoration:"none"}}>Amazon : {quantities.amazon}</p>
+                    </a>
+                  </div>
+                  <div>
+                    <a href="/warehouse" style={{textDecoration:"none"}}>
+                      <img src={warehousepng} style={{height:"100px",margin:"20px"}} alt="Warehouse"/>
+                      <p style={{textDecoration:"none"}}>Warehouse : {quantities.warehouse}</p>
+                    </a>
+                  </div>
+                  <div>
+                    <a href="/inventory" style={{textDecoration:"none"}}>
+                      <img src={noonlogo} style={{height:"80px",margin:"20px"}} alt="Inventory" />
+                      <p style={{textDecoration:"none"}}>Noon : {quantities.inventory}</p>
+                    </a>
+                  </div>
+                </Modal.Body>
+              </Modal>
+              <p>
+                <span>Vendor Id :</span> {selectedProduct.VENDOR_ID}
+              </p>
+              <p>
+                <span>Warehouse Id :</span> {selectedProduct.WAREHOUSE_ID}
+              </p>
+              <p>
+                <span>Product Id :</span> {selectedProduct.PRODUCT_ID}
+              </p>
+              <p>
+                <span>product status :</span> {selectedProduct.PRODUCT_STATUS}
+              </p>
               <img
                 src={selectedProduct.image}
                 alt={selectedProduct.PRODUCT_STATUS}
-                style={{ width: "100px",margin:"20px" }}
+                style={{ width: "100px", margin: "20px" }}
               />
 
               <div>
-              <button className="btn btn-primary" onClick={handleEditClick}>
-                <span style={{padding:"10px",margin:"20px"}}>Edit</span><EditOutlined /> 
-              </button>
+                <button className="btn btn-primary" onClick={handleEditClick}>
+                  <span style={{ padding: "10px", margin: "20px" }}>Edit</span>
+                  <EditOutlined />
+                </button>
               </div>
               {showEditForm && (
                 <ProductCard
