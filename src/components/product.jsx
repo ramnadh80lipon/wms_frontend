@@ -7,9 +7,9 @@ import { SearchOutlined, EditOutlined } from "@ant-design/icons";
 import { useNavigate, Link } from "react-router-dom";
 import ProductCard from "./PRODUCT_CRUD/Update";
 import "./product.css";
-import amazonpng from "../assets/Icons/amazon.png"
-import warehousepng from "../assets/Icons/warehouse.png"
-import noonlogo from "../assets/Icons/noonlogo.png"
+import amazonpng from "../assets/Icons/amazon.png";
+import warehousepng from "../assets/Icons/warehouse.png";
+import noonlogo from "../assets/Icons/noonlogo.png";
 const Product = () => {
   const [products, setProducts] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -68,13 +68,11 @@ const Product = () => {
     setSelectedProduct(null);
   };
   const handleShowQuantityModal = () => {
-    
     setShowQuantityModal(true);
   };
-  
+
   // Function to close the Quantity Modal
   const handleCloseQuantityModal = () => {
-    
     setShowQuantityModal(false);
   };
   const [selectedItem, setSelectedItem] = useState("Active Items");
@@ -201,31 +199,38 @@ const Product = () => {
             key={item.PRODUCT_ID}
             onClick={() => handleCardClick(item)}
           >
-            <Card className="h-100 cursor-pointer">
-              <div className="text-center">
-                <Card.Img
-                  variant="top"
-                  src={item.image}
-                  style={{ width: "100px", height: "130px" }}
-                />
-              </div>
-              <Card.Body>
-                <Card.Title>{item.PRODUCT_NAME}</Card.Title>
-                <Card.Text>INR: {item.price}</Card.Text>
-              </Card.Body>
-              <Card.Footer className="text-center">
-                <Button variant="primary" className="text-center">
-                  Click for more Info
-                </Button>
-              </Card.Footer>
-            </Card>
+            <div style={{ marginBottom: "10px" }}>
+              <Card
+                className="h-100 cursor-pointer"
+                style={{ paddingTop: "20px" }}
+              >
+                <div className="text-center">
+                  <Card.Img
+                    variant="top"
+                    src={item.image}
+                    style={{ width: "100px", height: "130px" }}
+                  />
+                </div>
+                <Card.Body style={{textAlign:"center"}}>
+                  <Card.Title>{item.PRODUCT_NAME}</Card.Title>
+                  <Card.Text>INR: {item.price}</Card.Text>
+                </Card.Body>
+                <Card.Footer className="text-center">
+                  <Button variant="primary" className="text-center">
+                    Click for more Info
+                  </Button>
+                </Card.Footer>
+              </Card>
+            </div>
           </div>
         ))}
       </div>
 
-      <Button variant="primary" onClick={handleShowAddModal}>
-        Add Product
+      <div style={{position:"sticky",bottom:"0",backgroundColor:"white",padding:"15px",display:"flex",alignItems:"center",justifyContent:"flex-end"}}>
+      <Button variant="primary"onClick={handleShowAddModal}>
+        Add New Product
       </Button>
+      </div>
       <Modal show={showAddModal} onHide={handleCloseAddModal}>
         <Modal.Header closeButton>
           <Modal.Title>Add Product</Modal.Title>
@@ -265,31 +270,70 @@ const Product = () => {
               <p>
                 <span>Price: </span> {selectedProduct.price}/-
               </p>
-              <a href="#" style={{textDecoration:"none",color:"black"}}><p onClick={handleShowQuantityModal} >
-                <span>Quantity:</span> 45
-              </p></a>
+              <a href="#" style={{ textDecoration: "none", color: "black" }}>
+                <p onClick={handleShowQuantityModal}>
+                  <span>Quantity:</span> 45
+                </p>
+              </a>
 
-              <Modal show={showQuantityModal} onHide={handleCloseQuantityModal} style={{height:"100vh"}} >
+              <Modal
+                show={showQuantityModal}
+                onHide={handleCloseQuantityModal}
+                style={{ height: "100vh" }}
+              >
                 <Modal.Header closeButton>
-                  <Modal.Title style={{ textAlign: "center",display:"block",width:"100%" }}>Quantity Details</Modal.Title>
+                  <Modal.Title
+                    style={{
+                      textAlign: "center",
+                      display: "block",
+                      width: "100%",
+                    }}
+                  >
+                    Quantity Details
+                  </Modal.Title>
                 </Modal.Header>
-                <Modal.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                  <div >
-                    <a href="/amazon" style={{textDecoration:"none"}}>
-                      <img src={amazonpng} style={{height:"100px",margin:"20px"}} alt="Amazon" />
-                      <p style={{textDecoration:"none"}}>Amazon : {quantities.amazon}</p>
+                <Modal.Body
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <div>
+                    <a href="/amazon" style={{ textDecoration: "none" }}>
+                      <img
+                        src={amazonpng}
+                        style={{ height: "100px", margin: "20px" }}
+                        alt="Amazon"
+                      />
+                      <p style={{ textDecoration: "none" }}>
+                        Amazon : {quantities.amazon}
+                      </p>
                     </a>
                   </div>
                   <div>
-                    <a href="/warehouse" style={{textDecoration:"none"}}>
-                      <img src={warehousepng} style={{height:"100px",margin:"20px"}} alt="Warehouse"/>
-                      <p style={{textDecoration:"none"}}>Warehouse : {quantities.warehouse}</p>
+                    <a href="/warehouse" style={{ textDecoration: "none" }}>
+                      <img
+                        src={warehousepng}
+                        style={{ height: "100px", margin: "20px" }}
+                        alt="Warehouse"
+                      />
+                      <p style={{ textDecoration: "none" }}>
+                        Warehouse : {quantities.warehouse}
+                      </p>
                     </a>
                   </div>
                   <div>
-                    <a href="/inventory" style={{textDecoration:"none"}}>
-                      <img src={noonlogo} style={{height:"80px",margin:"20px"}} alt="Inventory" />
-                      <p style={{textDecoration:"none"}}>Noon : {quantities.inventory}</p>
+                    <a href="/inventory" style={{ textDecoration: "none" }}>
+                      <img
+                        src={noonlogo}
+                        style={{ height: "80px", margin: "20px" }}
+                        alt="Inventory"
+                      />
+                      <p style={{ textDecoration: "none" }}>
+                        Noon : {quantities.inventory}
+                      </p>
                     </a>
                   </div>
                 </Modal.Body>
@@ -309,7 +353,7 @@ const Product = () => {
               <img
                 src={selectedProduct.image}
                 alt={selectedProduct.PRODUCT_STATUS}
-                style={{ width: "100px", margin: "20px" }}
+                style={{ width: "100px", height: "100px", margin: "20px" }}
               />
 
               <div>
