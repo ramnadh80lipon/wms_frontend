@@ -1,0 +1,18 @@
+/* AddVendor.css */
+
+.form-group {
+    margin: 5px;
+  }  
+  .form-control {
+    margin: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  /* Handle overflow with scrollbars if needed */
+  
+  
+  

@@ -56,10 +56,13 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
         position: "fixed",
         top: 0,
         left: 0,
+        
 
         width: "256px",
         // Semi-transparent background
-        overflowY: "none", // Add scroll if content overflows
+        overflowY: "none", 
+        // Add scroll if content overflows
+       
       }}
     >
       <div className="logo-container">
