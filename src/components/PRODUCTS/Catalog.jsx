@@ -67,29 +67,35 @@ function Catalog() {
 
   return (
     <>
-    <div className="navbar">
+    <div className="navbar" style={{ backgroundColor:"#3fc584", color: "#fff", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 20px" }}>
     <div className="left">
-        <h3 className='display-3'>Catalogue</h3>
+        <h3 className='display-3' style={{ fontFamily: 'Arial, sans-serif', fontSize: '2rem' }}>Catalogue</h3>
         
     </div>
     <div className="right">
-    <Button className='m-3 ' size='lg' variant="light"><i className="bi bi-upload p-2"></i>Export all</Button>
-    <Button className='m-3' size= 'lg' variant="light" onClick={()=>handleCardClick()}>Import all</Button>
-    <Button className="display-3" size='lg' variant="light"><i className='bi bi-plus-circle p-2'></i>Add Product</Button>
-    </div>
+    <Button className='m-3' size='' variant="primary" style={{  border: "none" }}>
+      <i className="bi bi-upload p-2" style={{ color: "#fff" }}></i>Export all
+    </Button>
+    <Button className='m-3' size='' variant="primary" style={{  border: "none" }} onClick={handleCardClick}>
+      Import all
+    </Button>
+    <Button className='display-3' size='' variant="primary" style={{ border: "none" }}>
+      <i className='bi bi-plus-circle p-2' style={{ color: "#fff" }}></i>Add Product
+    </Button>
+  </div>
 </div>
 <div className="second-headings mt-3">
-<Button className='m-3 ' size='lg' variant="light"><i className="bi bi-plus-circle p-2"></i>SKU</Button>
-<Button className='m-3 ' size='lg' variant="light"><i className="bi bi-plus-circle p-2"></i>Product ID</Button>
+<Button className='m-3 '  variant="light"><i className="bi bi-plus-circle p-2"></i>SKU</Button>
+<Button className='m-3 '  variant="light"><i className="bi bi-plus-circle p-2"></i>Product ID</Button>
 </div>
 <hr></hr>
 <div className="second-headings mt-3">
     
-<img src={truck} alt="truck" className="rounded mx-auto d-block" />
+<img src={truck} style={{width:"15%"}} alt="truck" className="rounded mx-auto d-block" />
 <p className='display-6'style={{display:"flex",justifyContent:'center',alignItems:"center",margin:'auto'}}>Your Catalog is empty</p>
 <p className='' style={{display:"flex",justifyContent:'center',alignItems:"center",margin:'auto'}}>Start adding products to see them listed here</p>
-<Button className="display-3" size='lg' variant="primary" style={{display:"flex",justifyContent:'center',alignItems:"center",margin:'auto'}}><i className='bi bi-plus-circle p-2'></i>Add Product</Button>
-<a href="" style={{display:"flex",justifyContent:'center',alignItems:"center",margin:'auto'}}>Learn more</a>
+<Button className="display-3" size='' variant="primary" style={{display:"flex",justifyContent:'center',alignItems:"center",margin:'auto',marginTop:"20px",marginBottom:"10px"}}><i className='bi bi-plus-circle p-2'></i>Add Product</Button>
+<a href="" style={{display:"flex",justifyContent:'center',alignItems:"center",margin:'auto',textDecoration:"none"}}>Learn more</a>
 
 </div>
 
