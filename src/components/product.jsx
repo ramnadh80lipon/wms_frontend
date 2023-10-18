@@ -67,14 +67,14 @@ const Product = () => {
   const handleCloseProductModal = () => {
     setSelectedProduct(null);
   };
-  const handleShowQuantityModal = () => {
-    setShowQuantityModal(true);
-  };
+    const handleShowQuantityModal = () => {
+      setShowQuantityModal(true);
+    };
 
-  // Function to close the Quantity Modal
-  const handleCloseQuantityModal = () => {
-    setShowQuantityModal(false);
-  };
+    // Function to close the Quantity Modal
+    const handleCloseQuantityModal = () => {
+      setShowQuantityModal(false);
+    };
   const [selectedItem, setSelectedItem] = useState("Active Items");
 
   const handleItemClick = (e) => {
