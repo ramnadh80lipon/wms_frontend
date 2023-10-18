@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import Button from '@mui/material/Button';
+import { Button } from 'antd';
 import "./AddVendor.css";
 function AddVendor() {
   const [formData, setFormData] = useState({

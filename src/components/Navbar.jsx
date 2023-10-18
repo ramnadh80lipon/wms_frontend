@@ -14,15 +14,13 @@ import {
   UnorderedListOutlined,
   SettingOutlined,
   TeamOutlined,
+  
 } from "@ant-design/icons";
-import EditNoteIcon from "@mui/icons-material/EditNote";
-import DescriptionIcon from "@mui/icons-material/Description";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import LoginIcon from "@mui/icons-material/Login";
-import StorageIcon from "@mui/icons-material/Storage";
-import StorefrontIcon from "@mui/icons-material/Storefront";
-import CategoryIcon from "@mui/icons-material/Category";
-import AssignmentIcon from "@mui/icons-material/Assignment";
+import { MdEditNote,MdDescription,MdLocalShipping,MdAssignmentAdd,MdLogin,MdOutlineStorage,MdStorefront,MdCategory } from 'react-icons/md';
+
+
+
+
 import icon from "../icons/icon_1.png";
 
 const Navbar = ({ isLoggedIn, onLogout }) => {
@@ -56,11 +54,12 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
         position: "fixed",
         top: 0,
         left: 0,
-        
+        overflow:"auto",
+        scrollbarWidth:"thin",
 
         width: "256px",
         // Semi-transparent background
-        overflowY: "none", 
+        overflowY: "auto", 
         // Add scroll if content overflows
        
       }}
@@ -96,7 +95,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
             </Menu.Item>
             <Menu.Item
               key="2"
-              icon={<CategoryIcon style={{ fontSize: "1.2rem" }} />}
+              icon={<MdCategory style={{ fontSize: "1.2rem" }} />}
             >
               <Link to="/products" style={{ textDecoration: "none" }}>
                 Products
@@ -118,7 +117,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
               </Menu.Item>
               <Menu.Item
                 key="purchase-orders"
-                icon={<DescriptionIcon style={{ fontSize: "1rem" }} />}
+                icon={<MdDescription style={{ fontSize: "1rem" }} />}
               >
                 <Link to="/purchase-orders" style={{ textDecoration: "none" }}>
                   Purchase Orders
@@ -126,7 +125,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
               </Menu.Item>
               <Menu.Item
                 key="purchase-receives"
-                icon={<AssignmentIcon style={{ fontSize: "1rem" }} />}
+                icon={<MdAssignmentAdd style={{ fontSize: "1rem" }} />}
               >
                 <Link
                   to="/purchase-receives"
@@ -137,7 +136,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
               </Menu.Item>
               <Menu.Item
                 key="purchase-bills"
-                icon={<DescriptionIcon style={{ fontSize: "1rem" }} />}
+                icon={<MdDescription style={{ fontSize: "1rem" }} />}
               >
                 <Link to="/purchase-bills" style={{ textDecoration: "none" }}>
                   Purchase Bills
@@ -157,7 +156,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
               </Menu.Item>
               <Menu.Item
                 key="sales-order"
-                icon={<EditNoteIcon style={{ fontSize: "1.2rem" }} />}
+                icon={<MdEditNote style={{ fontSize: "1.2rem" }} />}
               >
                 <Link to="/addSalesOrder" style={{ textDecoration: "none" }}>
                   Sales Orders
@@ -166,7 +165,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
             </Menu.SubMenu>
             <Menu.SubMenu
               key="inventory"
-              icon={<StorageIcon style={{ fontSize: "1rem" }} />}
+              icon={<MdOutlineStorage style={{ fontSize: "1rem" }} />}
               title="Inventory"
             >
               <Menu.Item key="item" icon={<AppstoreAddOutlined />}>
@@ -191,7 +190,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
 
             <Menu.Item
               key="3"
-              icon={<StorefrontIcon style={{ fontSize: "1.2rem" }} />}
+              icon={<MdStorefront style={{ fontSize: "1.2rem" }} />}
             >
               <Link to="/news" style={{ textDecoration: "none" }}>
                 Warehouse
@@ -199,7 +198,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
             </Menu.Item>
             <Menu.Item
               key="4"
-              icon={<LocalShippingIcon style={{ fontSize: "1.2rem" }} />}
+              icon={<MdLocalShipping style={{ fontSize: "1.2rem" }} />}
             >
               <Link to="/news" style={{ textDecoration: "none" }}>
                 Logistics
@@ -220,7 +219,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
             ) : (
               <Menu.Item
                 key="7"
-                icon={<LoginIcon style={{ fontSize: "1.2rem" }} />}
+                icon={<MdLogin style={{ fontSize: "1.2rem" }} />}
               >
                 <Link to="/signin" style={{ textDecoration: "none" }}>
                   LogIn

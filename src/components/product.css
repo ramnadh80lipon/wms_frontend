@@ -52,3 +52,9 @@ body{
 .icon-container:hover{
     background-color: #f6f6f8;
 }
+p span{
+    font-weight: bold;
+}
+a{
+    text-decoration: none;
+}

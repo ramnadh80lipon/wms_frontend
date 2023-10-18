@@ -1,0 +1,4 @@
+node_modules
+
+Dependencies For Icons:
+npm install react-icons
