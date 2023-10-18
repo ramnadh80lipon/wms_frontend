@@ -61,7 +61,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
 
         width: "256px",
         // Semi-transparent background
-        overflowY: "none", 
+        overflowY: "auto", 
         // Add scroll if content overflows
        
       }}
