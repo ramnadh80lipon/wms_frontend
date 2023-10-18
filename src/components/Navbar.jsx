@@ -56,7 +56,8 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
         position: "fixed",
         top: 0,
         left: 0,
-        
+        overflow:"auto",
+        scrollbarWidth:"thin",
 
         width: "256px",
         // Semi-transparent background
