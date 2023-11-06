@@ -5,14 +5,15 @@ import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import Update from './components/PRODUCT_CRUD/Update';
 import ListUser from './ListUser';
-import Product from './components/product';
+import Product from './components/Product_listing/product';
 import Navbar from './components/Navbar.jsx'; // Import your Navbar component
 import './App.css';
 import Catalog from './components/PRODUCTS/Catalog';
 import Listproduct from './components/PRODUCT_CRUD/Listproduct';
-import AddVendor from './components/purchases/AddVendor';
+import AddVendor from './components/purchases/AddVendor.jsx';
 import AddSales from './components/sales/AddSales';
 import AddNewCustomer from './components/customer/AddNewCustomer';
+import ProductDetails from './components/Product_listing/ProductDetails.jsx';
 function App() {
   return (
     
@@ -26,6 +27,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Product />} />
       <Route path="/listProduct" element={<Listproduct />} />
+      <Route path="/product/:uuid" element={<ProductDetails/>} />
       <Route path="/addVendor" element={<AddVendor/>} />
       <Route path="/products" element={<Catalog/>} /> 
       <Route path="/update" element={<Update/>} /> 

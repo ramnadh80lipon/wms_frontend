@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Modal, Alert, Dropdown } from "react-bootstrap";
-import Add from "./PRODUCT_CRUD/Add";
+import Add from "../PRODUCT_CRUD/Add";
 import axios from "axios";
 import { Input } from "antd";
 import { SearchOutlined, EditOutlined } from "@ant-design/icons";
 import { useNavigate, Link } from "react-router-dom";
-import ProductCard from "./PRODUCT_CRUD/Update";
+import ProductCard from "../PRODUCT_CRUD/Update";
 import "./product.css";
-import amazonpng from "../assets/Icons/amazon.png";
-import warehousepng from "../assets/Icons/warehouse.png";
-import noonlogo from "../assets/Icons/noonlogo.png";
+import amazonpng from "../../assets/Icons/amazon.png";
+import warehousepng from "../../assets/Icons/warehouse.png";
+import noonlogo from "../../assets/Icons/noonlogo.png";
+
 const Product = () => {
   const [products, setProducts] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -18,34 +19,39 @@ const Product = () => {
   const [searchItem, setSearchItem] = useState("");
   const [showEditForm, setShowEditForm] = useState(false);
   const [handleCloseEditForm, sethandleCloseEditForm] = useState(false);
-  // State for Quantity Modal
+
   const [showQuantityModal, setShowQuantityModal] = useState(false);
 
-  // Quantities for Amazon, Warehouse, and Inventory
-  const [quantities, setQuantities] = useState({
-    amazon: 100,
-    warehouse: 200,
-    inventory: 50,
-  });
+  const [productListings, setProductListings] = useState([]);
+
+
+
+
+ 
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    axios
-      .get("https://fakestoreapi.com/products")
-      .then((response) => {
-        console.log(response);
-        const data = response.data;
-        if (Array.isArray(data)) {
-          setProducts(data);
-        } else {
-          setError("Invalid data format received from the server.");
-        }
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
-  }, []);
+  
+
+ 
+
+  useEffect(() =>{
+    axios.get("http://localhost:8080/warehouse_products",{
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":localStorage.getItem("Authorization"),
+        'Cache-Control': 'no-cache',
+      }
+    }).then((response) =>{
+      console.log(response);
+      const data = response.data;
+      if (Array.isArray(data)) {
+        setProductListings(data);
+      } else {
+        setError("Invalid data format received from the server.");
+      }
+    })
+  })
 
   const handleShowAddModal = () => {
     setShowAddModal(true);
@@ -71,10 +77,20 @@ const Product = () => {
       setShowQuantityModal(true);
     };
 
-    // Function to close the Quantity Modal
+    
     const handleCloseQuantityModal = () => {
       setShowQuantityModal(false);
     };
+
+    const handleMoreInfoClick = (item) => {
+      navigate(`/product/${item.product_uuid}`);
+    };
+
+    // const handleMoreInfoClick = (item) => {
+    //   navigate(`/product/${item.PRODUCT_UUID}`);
+    // };
+
+    
   const [selectedItem, setSelectedItem] = useState("Active Items");
 
   const handleItemClick = (e) => {
@@ -193,10 +209,10 @@ const Product = () => {
       </div>
       {error && <Alert variant="danger">{error}</Alert>}
       <div className="row">
-        {products.map((item) => (
+        {productListings.map((item) => (
           <div
             className="col-md-3"
-            key={item.PRODUCT_ID}
+            key={item.productID}
             onClick={() => handleCardClick(item)}
           >
             <div style={{ marginBottom: "10px" }}>
@@ -207,16 +223,17 @@ const Product = () => {
                 <div className="text-center">
                   <Card.Img
                     variant="top"
-                    src={item.image}
+                    src={item.image_url}
                     style={{ width: "100px", height: "130px" }}
                   />
                 </div>
                 <Card.Body style={{textAlign:"center"}}>
-                  <Card.Title>{item.PRODUCT_NAME}</Card.Title>
-                  <Card.Text>INR: {item.price}</Card.Text>
+                  <Card.Title>{item.productName}</Card.Title>
+                  <Card.Text>{item.description}</Card.Text>
+                  <Card.Text>SAR: {item.price}</Card.Text>
                 </Card.Body>
                 <Card.Footer className="text-center">
-                  <Button variant="primary" className="text-center">
+                  <Button variant="primary" className="text-center" onClick={()=>handleMoreInfoClick(item)} >
                     Click for more Info
                   </Button>
                 </Card.Footer>
@@ -258,21 +275,24 @@ const Product = () => {
         >
           {selectedProduct && (
             <>
-              <h2>{selectedProduct.PRODUCT_NAME}</h2>
+              <h2>{selectedProduct.productName}</h2>
               <img
-                src={selectedProduct.image}
-                alt={selectedProduct.title}
+                src={selectedProduct.image_url}
+                alt={selectedProduct.productName}
                 style={{ width: "100px", margin: "20px" }}
               />
               <p>
-                <span>Description:</span> {selectedProduct.description}
+              <span>Description:</span> {selectedProduct.description.split(' ').slice(0, 50).join(' ')}
+
               </p>
               <p>
                 <span>Price: </span> {selectedProduct.price}/-
               </p>
               <a href="#" style={{ textDecoration: "none", color: "black" }}>
                 <p onClick={handleShowQuantityModal}>
-                  <span>Quantity:</span> 45
+                 
+                  {/* <span>Total Quantity: {selectedProduct.quantity+parseInt(selectedProduct?.AMAZON_QTY)+parseInt(selectedProduct?.NOON_QTY)} </span> */}
+                  <span>Quantity: {selectedProduct.quantity} </span>
                 </p>
               </a>
 
@@ -308,7 +328,7 @@ const Product = () => {
                         alt="Amazon"
                       />
                       <p style={{ textDecoration: "none" }}>
-                        Amazon : {quantities.amazon}
+                        Amazon : {selectedProduct?.AMAZON_QTY}
                       </p>
                     </a>
                   </div>
@@ -320,7 +340,7 @@ const Product = () => {
                         alt="Warehouse"
                       />
                       <p style={{ textDecoration: "none" }}>
-                        Warehouse : {quantities.warehouse}
+                        Warehouse : {selectedProduct.quantity}
                       </p>
                     </a>
                   </div>
@@ -332,27 +352,31 @@ const Product = () => {
                         alt="Inventory"
                       />
                       <p style={{ textDecoration: "none" }}>
-                        Noon : {quantities.inventory}
+                        Noon : {selectedProduct?.NOON_QTY}
                       </p>
                     </a>
                   </div>
                 </Modal.Body>
               </Modal>
               <p>
-                <span>Vendor Id :</span> {selectedProduct.VENDOR_ID}
+                <span>Product Location :</span> {selectedProduct.Location}
               </p>
               <p>
-                <span>Warehouse Id :</span> {selectedProduct.WAREHOUSE_ID}
+                <span>Warehouse Name : {selectedProduct.warehouse_name} </span>
               </p>
               <p>
-                <span>Product Id :</span> {selectedProduct.PRODUCT_ID}
+              <span>Product Id: {selectedProduct.productId}</span>
+              <br></br>
+              <span>Exact Location: {selectedProduct.more_info}</span>
+
+
               </p>
               <p>
-                <span>product status :</span> {selectedProduct.PRODUCT_STATUS}
+                <span>product status :</span> {selectedProduct?.PRODUCT_STATUS}
               </p>
               <img
-                src={selectedProduct.image}
-                alt={selectedProduct.PRODUCT_STATUS}
+                src={selectedProduct.barcode_image_url}
+                alt={selectedProduct?.PRODUCT_STATUS}
                 style={{ width: "100px", height: "100px", margin: "20px" }}
               />
 

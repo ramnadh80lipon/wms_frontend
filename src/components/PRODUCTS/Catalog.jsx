@@ -36,11 +36,12 @@ function Catalog() {
     }
 
     const formData = new FormData();
-    formData.append("file", selectedFile);
+    formData.append("csv_file", selectedFile);
 
     try {
       const response = await axios.post(
-        "http://localhost/project_backend/api/import_file.php",
+        "http://localhost:8080/warehouse_products_entry"
+        ,
         formData,
         {
           headers: {
