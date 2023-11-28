@@ -216,7 +216,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                 Warehouse
               </Link>
             </Menu.Item>
-            {shouldShowMenuItem(["Admin","supervisor"]) && (
+            {shouldShowMenuItem(["Admin","super visor"]) && (
               <>
             <Menu.Item
               key="4"

@@ -11,83 +11,119 @@ import {
   Button,
 } from "antd";
 import "./ProductDetails.css";
-import { Link } from "react-router-dom";
+import axios from 'axios';
+import { Link,useParams } from "react-router-dom";
+import { useEffect,useState } from "react";
 
 function ProductDetails() {
-  const productDetails = {
-    uuid: 1,
-    productName: "Sample Product",
-    price: 100,
-    discountPrice: 90,
-    sku: "123456",
-    weight: 500,
-    weightUnit: "gm",
-    cost: 50,
-    location: "inventory",
-    quantity: 100,
-    isUnlimited: true,
-    minOrderQuantity: 1,
-    maxOrderQuantity: 10,
-    dischargeVAT: true,
-    availability: true,
-    requiresShipping: true,
-    availabilityAmazon: 50,
-    availabilityNoon: 30,
-    availabilityInventory: 20,
-    productDescription: "This is a sample product description.",
-    details: [
-      {
-        key: "1",
-        attribute: "Brand",
-        value: "Sample Brand",
-      },
-      {
-        key: "2",
-        attribute: "Product Id",
-        value: "12345",
-      },
-      {
-        key: "3",
-        attribute: "Color",
-        value: "Red",
-      },
-      {
-        key: "4",
-        attribute: "Product dimensions",
-        value: "20x10x5 cm",
-      },
-      {
-        key: "5",
-        attribute: "Special Features",
-        value: "Waterproof",
-      },
-      {
-        key: "6",
-        attribute: "BIN Number",
-        value: "BIN123456",
-      },
-    ],
-    columns: [
-      {
-        title: "Attribute",
-        dataIndex: "attribute",
-        key: "attribute",
-      },
-      {
-        title: "Value",
-        dataIndex: "value",
-        key: "value",
-      },
-    ],
-  };
+  const {product_uuid} = useParams();
+
+  console.log("param is ",product_uuid)
+
+  const [productDetails,setProductDetails] = useState({});
+
+  useEffect(()=>{
+    axios.get(`http://localhost:8080/warehouse_product/${product_uuid}`).then(
+      (res)=>{
+        console.log(res.data[0]);
+        setProductDetails(res.data[0]);
+        },
+      (err)=>console.error(err)
+    )
+  },[product_uuid]);
+
+  if(Object.keys(productDetails).length===0){
+    return <div>Loading</div>;
+  }
+  
+  
+
+
+
+
+
+
+
+  // const productDetails = {
+  //   uuid: 1,
+  //   productName: "Sample Product",
+  //   price: 100,
+  //   discountPrice: 90,
+  //   sku: "123456",
+  //   weight: 500,
+  //   weightUnit: "gm",
+  //   cost: 50,
+  //   location: "inventory",
+  //   quantity: 100,
+  //   isUnlimited: true,
+  //   minOrderQuantity: 1,
+  //   maxOrderQuantity: 10,
+  //   dischargeVAT: true,
+  //   availability: true,
+  //   requiresShipping: true,
+  //   availabilityAmazon: 50,
+  //   availabilityNoon: 30,
+  //   availabilityInventory: 20,
+  //   productDescription: "This is a sample product description.",
+  //   
+  // };
   console.log(productDetails);
+
+
+ const details= [
+        {
+          key: "1",
+          attribute: "Brand",
+          value: productDetails?.brand,
+        },
+        {
+          key: "2",
+          attribute: "Product Id",
+          value: productDetails?.productId,
+        },
+        {
+          key: "3",
+          attribute: "Color",
+          value: productDetails?.color,
+        },
+        {
+          key: "4",
+          attribute: "Product dimensions",
+          value: productDetails?.dimension,
+        },
+        {
+          key: "5",
+          attribute: "Product Type",
+          value: productDetails.product_type,
+        },
+        {
+          key: "6",
+          attribute: "BIN Number",
+          value: productDetails.bin_number,
+        },
+      ]
+      const
+      columns= [
+        {
+          title: "Attribute",
+          dataIndex: "attribute",
+          key: "attribute",
+        },
+        {
+          title: "Value",
+          dataIndex: "value",
+          key: "value",
+        },
+      ]
+      // console.log(productDetails[0]?.brand)
+      // console.log(productDetails[0].brand) 
 
   return (
     <>
       <div className="product-details-parent">
         <div className="product-details-container" style={{marginBottom:"10px"}}>
           <h2>Product Details</h2>
-          <Link to={`/editproductdetails/${productDetails.uuid}`}>
+          <Link to={`/editproductdetails/${productDetails.product_uuid}`}>
             <Button type="primary" size="large">
               Edit
             </Button>
@@ -119,16 +155,22 @@ function ProductDetails() {
                 }}
               >
                 <div style={{ flex: 1, marginRight: 10 }}>
+                  <label>Barcode:</label>
+                  <img 
+                    src={productDetails.qrcode_image_url}
+                    alt="barcode"
+                    style={{width:"200px",height:"75px"}}
+                    />
+                  
+                </div>
+                <div style={{ flex: 1, marginRight: 10 }}>
                   <label>Price</label>
                   <Input value={productDetails.price} readOnly />
                 </div>
-                <div style={{ flex: 1, marginRight: 10 }}>
-                  <label>Discount Price</label>
-                  <Input value={productDetails.discountPrice} readOnly />
-                </div>
+                
                 <div style={{ flex: 1 }}>
                   <img
-                    src="https://media.istockphoto.com/id/173843432/photo/a-simple-image-of-a-striped-barcode.jpg?s=1024x1024&w=is&k=20&c=nKbDADrvWJNwP2nenbL44vxta-yDfAapUhpjtUHOLIA="
+                    src={productDetails.image_url}
                     alt=""
                     style={{ width: "200px" }}
                   />
@@ -142,18 +184,19 @@ function ProductDetails() {
               <div style={{ display: "flex" }}>
                 <div style={{ flex: 1, marginRight: 10 }}>
                   <label>SKU</label>
+                
                   <Input value={productDetails.sku} readOnly />
                 </div>
                 <div style={{ flex: 1, marginRight: 10 }}>
                   <label>Weight</label>
                   <Input
-                    value={`${productDetails.weight} ${productDetails.weightUnit}`}
+                    value={`${productDetails.weight}`}
                     readOnly
                   />
                 </div>
                 <div style={{ flex: 1 }}>
                   <label>Cost</label>
-                  <Input value={productDetails.cost} readOnly />
+                  <Input value={productDetails?.price} readOnly />
                 </div>
               </div>
             </Card>
@@ -184,22 +227,26 @@ function ProductDetails() {
 
                 <div style={{ flex: 1 }}>
                   <label style={{ paddingRight: "10px" }}>Unlimited:</label>
-                  <Checkbox checked={productDetails.isUnlimited} disabled />
+                  <Checkbox checked={productDetails?.isUnlimited} disabled />
                 </div>
               </div>
             </Card>
           </div>
 
           <div className="order-quantities-container">
-            <Card title="Order" style={{  borderRadius: "10px",marginBottom:"10px" }}>
+            <Card title="Product location" style={{  borderRadius: "10px",marginBottom:"10px" }}>
               <div style={{ display: "flex" }}>
                 <div style={{ flex: 1, marginRight: 10 }}>
-                  <label>Minimum Order Quantity</label>
-                  <Input value={productDetails.minOrderQuantity} readOnly />
+                  <label>Exact Location</label>
+                  <Input value={productDetails?.more_info} readOnly />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <label>Maximum Order Quantity</label>
-                  <Input value={productDetails.maxOrderQuantity} readOnly />
+                  <label>warehouse Name</label>
+                  <Input value={productDetails?.warehouse_name} readOnly />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label>Zone</label>
+                  <Input value={productDetails?.zone} readOnly />
                 </div>
               </div>
             </Card>
@@ -219,7 +266,7 @@ function ProductDetails() {
               <Col span={8}>
                 <Card title="Availability" style={{  borderRadius: "10px",marginBottom:"10px" }}>
                   <Switch
-                    defaultChecked={productDetails.availability}
+                    defaultChecked={productDetails?.availability}
                     disabled
                   />
                   <span>Availability</span>
@@ -228,7 +275,7 @@ function ProductDetails() {
               <Col span={8}>
                 <Card title="Requires Shipping" style={{ borderRadius: "10px",marginBottom:"10px" }}>
                   <Switch
-                    defaultChecked={productDetails.requiresShipping}
+                    defaultChecked={productDetails?.requiresShipping}
                     disabled
                   />
                   <span>Requires Shipping</span>
@@ -244,7 +291,7 @@ function ProductDetails() {
                   <Button type="primary">Amazon</Button>
                   <Input
                     placeholder="Amazon"
-                    value={productDetails.availabilityAmazon}
+                    value={productDetails?.availabilityAmazon}
                     readOnly
                   />
                 </div>
@@ -252,7 +299,7 @@ function ProductDetails() {
                   <Button type="primary">Noon</Button>
                   <Input
                     placeholder="Noon"
-                    value={productDetails.availabilityNoon}
+                    value={productDetails?.availabilityNoon}
                     readOnly
                   />
                 </div>
@@ -260,7 +307,7 @@ function ProductDetails() {
                   <Button type="primary">Inventory</Button>
                   <Input
                     placeholder="Inventory"
-                    value={productDetails.availabilityInventory}
+                    value={productDetails?.quantity}
                     readOnly
                   />
                 </div>
@@ -271,15 +318,15 @@ function ProductDetails() {
           {/* Product Description Section */}
           <div className="product-description-container">
             <Card title="Product Description" style={{  borderRadius: "10px",marginBottom:"10px" }}>
-              {productDetails.productDescription}
+              {productDetails.description}
             </Card>
           </div>
 
           <div className="product-details">
             <Card title="Product Details" style={{  borderRadius: "10px",marginBottom:"10px" }}>
               <Table
-                dataSource={productDetails.details}
-                columns={productDetails.columns}
+                dataSource={details}
+                columns={columns}
                 pagination={false}
                 size="small"
                 bordered
