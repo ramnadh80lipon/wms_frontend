@@ -13,8 +13,8 @@ import {
   Table,
 } from "antd";
 import { useParams } from "react-router-dom";
-import "./ProductDetails.css";
-function ProductDetails() {
+import "./ProductDetailsEdit.css";
+function ProductDetailsEdit() {
   const { id } = useParams();
   console.log(id);
 
@@ -96,9 +96,7 @@ function ProductDetails() {
             <Button className="button-save button" type="primary" size="large">
               Save
             </Button>
-            <Button className="button-view button" type="primary" size="large">
-              Edit
-            </Button>
+
             <Button
               className="button-delete button"
               type="primary"
@@ -269,4 +267,4 @@ function ProductDetails() {
   );
 }
 
-export default ProductDetails;
+export default ProductDetailsEdit;

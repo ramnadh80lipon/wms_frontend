@@ -1,66 +1,67 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Modal, Alert, Dropdown } from "react-bootstrap";
-import Add from "../PRODUCT_CRUD/Add";
+import { Card, Button, Modal, Alert, Dropdown, Table } from "react-bootstrap";
 import axios from "axios";
-import { Input } from "antd";
+import { Input, Switch, Space } from "antd";
 import { SearchOutlined, EditOutlined } from "@ant-design/icons";
 import { useNavigate, Link } from "react-router-dom";
-import ProductCard from "../PRODUCT_CRUD/Update";
-import "./product.css";
-import amazonpng from "../../assets/Icons/amazon.png";
-import warehousepng from "../../assets/Icons/warehouse.png";
-import noonlogo from "../../assets/Icons/noonlogo.png";
-
-const Product = () => {
+const WarehouseB = () => {
   const [products, setProducts] = useState([]);
-  const [showAddModal, setShowAddModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [error, setError] = useState(null);
   const [searchItem, setSearchItem] = useState("");
+  const [filteredProducts,setfilteredProducts] = useState("");
   const [showEditForm, setShowEditForm] = useState(false);
   const [handleCloseEditForm, sethandleCloseEditForm] = useState(false);
-
+  // State for Quantity Modal
   const [showQuantityModal, setShowQuantityModal] = useState(false);
 
-  const [productListings, setProductListings] = useState([]);
-
-
-
-
- 
-
+  // Quantities for Amazon, Warehouse, and Inventory
+  
   const navigate = useNavigate();
+  const warehouseName = "WAREHOUSE 3";
 
   
 
- 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/warehouse_products/?warehouseName=${encodeURIComponent(warehouseName)}`)
+      
+      .then((response) => {
+        console.log(response.data);
+        const data = response.data;
+        if (Array.isArray(data)) {
+          setProducts(data);
+          console.log("the data is:", products);
+        } else {
+          setError("Invalid data format received from the server.");
+        }
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  }, []);
 
-  useEffect(() =>{
-    axios.get("http://localhost:8080/warehouse_products",{
-      headers:{
-        "Content-Type":"application/json",
-        "Authorization":localStorage.getItem("Authorization"),
-        'Cache-Control': 'no-cache',
-      }
-    }).then((response) =>{
-      console.log(response);
-      const data = response.data;
-      if (Array.isArray(data)) {
-        setProductListings(data);
-      } else {
-        setError("Invalid data format received from the server.");
-      }
-    })
-  })
+  useEffect(()=>{
+    const fileteredData = products.filter((item)=>{
+    const lowerProductName = item?.productName?.toLowerCase();
+    const lowerProductId = item?.productId?.toLowerCase();
+    const lowerSearchItem = searchItem.toLowerCase();
+     
+    
+    return lowerProductName.includes(lowerSearchItem) || lowerProductId.includes(lowerSearchItem);
+    
+    });
 
-  const handleShowAddModal = () => {
-    setShowAddModal(true);
-  };
+     
+    setfilteredProducts(fileteredData);
+  },[products,searchItem])
+  console.log("the searching item is:",searchItem);
 
-  const handleCloseAddModal = () => {
-    setShowAddModal(false);
-  };
+  
 
+  
+
+  
   const handleCardClick = (product) => {
     setSelectedProduct(product);
   };
@@ -73,24 +74,11 @@ const Product = () => {
   const handleCloseProductModal = () => {
     setSelectedProduct(null);
   };
-    const handleShowQuantityModal = () => {
-      setShowQuantityModal(true);
-    };
-
-    
-    const handleCloseQuantityModal = () => {
-      setShowQuantityModal(false);
-    };
-
-    const handleMoreInfoClick = (item) => {
-      navigate(`/product/${item.product_uuid}`);
-    };
-
-    // const handleMoreInfoClick = (item) => {
-    //   navigate(`/product/${item.PRODUCT_UUID}`);
-    // };
-
-    
+  
+  // Function to close the Quantity Modal
+  const handleCloseQuantityModal = () => {
+    setShowQuantityModal(false);
+  };
   const [selectedItem, setSelectedItem] = useState("Active Items");
 
   const handleItemClick = (e) => {
@@ -112,9 +100,19 @@ const Product = () => {
     width: "75px",
   };
 
+
+
+
+  const [viewType, setViewType] = useState('table'); // Default view is 'table'
+
+  const toggleView = (newView) => {
+    setViewType(newView);
+
+  };
+
   return (
     <>
-      <h1 className=" text-center">Product Dashboard</h1>
+      <h1 className=" text-center">{warehouseName} Product Dashboard</h1>
 
       <div className="row p-3">
         <div className="col-3">
@@ -179,22 +177,25 @@ const Product = () => {
         </div>
 
         <div className="col-9 d-flex justify-content-end">
+          {/* <div>
           <Link to="/ListProduct">
             <Button variant="primary">
               <i className="bi bi-plus-circle p-2"></i>New
             </Button>
           </Link>
-          <div className="icon-container rounded">
-            <i className="bi bi-list icon"></i>
-            <i className="bi bi-microsoft icon"></i>
+          </div> */}
+          <div className="toggle-button center">
+            <Space >
+              <Switch style={{backgroundColor:"#0D6EFD"}}
+              checkedChildren={<i className="bi bi-grid-3x3-gap-fill icon"></i> }
+              unCheckedChildren={<i className="bi bi-list icon"></i> }
+              onChange={(checked) => toggleView(checked ? 'table' : 'card')}
+              checked={viewType === 'table'}
+              />
+            </Space>
           </div>
 
-          <div className="icon-container rounded-top">
-            <i class="bi bi-three-dots"></i>
-          </div>
-          <div className="icon-container rounded-left">
-            <i class="bi bi-question-lg"></i>
-          </div>
+          
         </div>
       </div>
       <hr></hr>
@@ -209,10 +210,14 @@ const Product = () => {
       </div>
       {error && <Alert variant="danger">{error}</Alert>}
       <div className="row">
-        {productListings.map((item) => (
+
+        {searchItem === '' ? (
+
+      
+        products.map((item) => (
           <div
             className="col-md-3"
-            key={item.productID}
+            key={item.PRODUCT_ID}
             onClick={() => handleCardClick(item)}
           >
             <div style={{ marginBottom: "10px" }}>
@@ -227,35 +232,85 @@ const Product = () => {
                     style={{ width: "100px", height: "130px" }}
                   />
                 </div>
-                <Card.Body style={{textAlign:"center"}}>
+                <Card.Body style={{ textAlign: "center" }}>
                   <Card.Title>{item.productName}</Card.Title>
-                  <Card.Text>{item.description}</Card.Text>
-                  <Card.Text>SAR: {item.price}</Card.Text>
+                  <Card.Text>Description: {item.description}</Card.Text>
+                  <Card.Text>ProductId : {item.productId}</Card.Text>
                 </Card.Body>
                 <Card.Footer className="text-center">
-                  <Button variant="primary" className="text-center" onClick={()=>handleMoreInfoClick(item)} >
-                    Click for more Info
-                  </Button>
-                </Card.Footer>
+                  <Link to={`/product/${item.product_uuid}`}>
+                    <Button variant="primary" className="text-center">
+                      Click for more Info
+                    </Button>
+                  </Link>
+                  </Card.Footer>
               </Card>
-            </div>
-          </div>
-        ))}
-      </div>
+              </div>
+            
+              </div>
+              ))
+        ) : (
+          filteredProducts.map((item) => (
+            <div
+              className="col-md-3"
+              key={item.PRODUCT_ID}
+              onClick={() => handleCardClick(item)}
+            >
+              <div style={{ marginBottom: "10px" }}>
+                <Card
+                  className="h-100 cursor-pointer"
+                  style={{ paddingTop: "20px" }}
+                >
+                  <div className="text-center">
+                    <Card.Img
+                      variant="top"
+                      src={item.image_url}
+                      style={{ width: "100px", height: "130px" }}
+                    />
+                  </div>
+                  <Card.Body style={{ textAlign: "center" }}>
+                    <Card.Title>{item.productName}</Card.Title>
+                    <Card.Text>Description: {item.description}</Card.Text>
+                    <Card.Text>ProductId : {item.productId}</Card.Text>
+                  </Card.Body>
+                  <Card.Footer className="text-center">
+                    <Link to={`/product/${item.product_uuid}`}>
+                      <Button variant="primary" className="text-center">
+                        Click for more Info
+                      </Button>
+                    </Link>
+                    </Card.Footer>
+                </Card>
+                </div>
+              
+                </div>
+                ))
 
-      <div style={{position:"sticky",bottom:"0",backgroundColor:"white",padding:"15px",display:"flex",alignItems:"center",justifyContent:"flex-end"}}>
-      <Button variant="primary"onClick={handleShowAddModal}>
-        Add New Product
-      </Button>
+        )
+          }
+          
+                
+            
+      
+       
+
+
+      <div
+        style={{
+          position: "sticky",
+          bottom: "0",
+          backgroundColor: "white",
+          padding: "15px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
+      >
+       <Link to="/addproduct"> <Button variant="primary">
+          Add New Product
+        </Button></Link>
       </div>
-      <Modal show={showAddModal} onHide={handleCloseAddModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Product</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Add />
-        </Modal.Body>
-      </Modal>
+     
 
       <Modal show={selectedProduct !== null} onHide={handleCloseProductModal}>
         <Modal.Header closeButton>
@@ -275,108 +330,40 @@ const Product = () => {
         >
           {selectedProduct && (
             <>
-              <h2>{selectedProduct.productName}</h2>
+              <h2>{selectedProduct?.PRODUCT_NAME}</h2>
               <img
                 src={selectedProduct.image_url}
                 alt={selectedProduct.productName}
                 style={{ width: "100px", margin: "20px" }}
               />
               <p>
-              <span>Description:</span> {selectedProduct.description.split(' ').slice(0, 50).join(' ')}
-
+                <span>Description:</span> {selectedProduct?.description}
               </p>
               <p>
                 <span>Price: </span> {selectedProduct.price}/-
               </p>
               <a href="#" style={{ textDecoration: "none", color: "black" }}>
-                <p onClick={handleShowQuantityModal}>
-                 
-                  {/* <span>Total Quantity: {selectedProduct.quantity+parseInt(selectedProduct?.AMAZON_QTY)+parseInt(selectedProduct?.NOON_QTY)} </span> */}
-                  <span>Quantity: {selectedProduct.quantity} </span>
-                </p>
+                {/* <p onClick={handleShowQuantityModal}> */}
+                  <span>Quantity:</span> {selectedProduct?.quantity}
+                {/* </p> */}
               </a>
 
-              <Modal
-                show={showQuantityModal}
-                onHide={handleCloseQuantityModal}
-                style={{ height: "100vh" }}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title
-                    style={{
-                      textAlign: "center",
-                      display: "block",
-                      width: "100%",
-                    }}
-                  >
-                    Quantity Details
-                  </Modal.Title>
-                </Modal.Header>
-                <Modal.Body
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    textAlign: "center",
-                  }}
-                >
-                  <div>
-                    <a href="/amazon" style={{ textDecoration: "none" }}>
-                      <img
-                        src={amazonpng}
-                        style={{ height: "100px", margin: "20px" }}
-                        alt="Amazon"
-                      />
-                      <p style={{ textDecoration: "none" }}>
-                        Amazon : {selectedProduct?.AMAZON_QTY}
-                      </p>
-                    </a>
-                  </div>
-                  <div>
-                    <a href="/warehouse" style={{ textDecoration: "none" }}>
-                      <img
-                        src={warehousepng}
-                        style={{ height: "100px", margin: "20px" }}
-                        alt="Warehouse"
-                      />
-                      <p style={{ textDecoration: "none" }}>
-                        Warehouse : {selectedProduct.quantity}
-                      </p>
-                    </a>
-                  </div>
-                  <div>
-                    <a href="/inventory" style={{ textDecoration: "none" }}>
-                      <img
-                        src={noonlogo}
-                        style={{ height: "80px", margin: "20px" }}
-                        alt="Inventory"
-                      />
-                      <p style={{ textDecoration: "none" }}>
-                        Noon : {selectedProduct?.NOON_QTY}
-                      </p>
-                    </a>
-                  </div>
-                </Modal.Body>
-              </Modal>
+                  
               <p>
-                <span>Product Location :</span> {selectedProduct.Location}
+                <span>Vendor Id :</span> {selectedProduct?.VENDOR_ID}
               </p>
               <p>
-                <span>Warehouse Name : {selectedProduct.warehouse_name} </span>
+                <span>Warehouse Name :</span> {selectedProduct.warehouse_name}
               </p>
               <p>
-              <span>Product Id: {selectedProduct.productId}</span>
-              <br></br>
-              <span>Exact Location: {selectedProduct.more_info}</span>
-
-
+                <span>Product Id :</span> {selectedProduct.productId}
               </p>
               <p>
                 <span>product status :</span> {selectedProduct?.PRODUCT_STATUS}
               </p>
               <img
                 src={selectedProduct.barcode_image_url}
-                alt={selectedProduct?.PRODUCT_STATUS}
+                alt={selectedProduct.PRODUCT_STATUS}
                 style={{ width: "100px", height: "100px", margin: "20px" }}
               />
 
@@ -386,18 +373,22 @@ const Product = () => {
                   <EditOutlined />
                 </button>
               </div>
-              {showEditForm && (
+              {/* {showEditForm && (
                 <ProductCard
                   selectedProduct={selectedProduct}
                   onClose={handleCloseEditForm}
                 />
-              )}
+              )} */}
             </>
           )}
         </Modal.Body>
       </Modal>
-    </>
-  );
-};
+    </div>
 
-export default Product;
+    </>
+  )}
+
+  export default WarehouseB;
+
+
+

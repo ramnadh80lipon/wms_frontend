@@ -58,3 +58,23 @@ p span{
 a{
     text-decoration: none;
 }
+
+/* Center the content in each column */
+.center {
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .toggle-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Adjust width and height to fit your design */
+    height: 40px;
+    margin-left: 10px;
+    
+    /* border-radius: 50%; Makes it circular */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    /* font-size: 10px; Adjust font size as needed */
+  }

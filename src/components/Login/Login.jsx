@@ -1,69 +1,79 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import login_background from './login_background.jpg';
+import { useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import styles from "./styles.module.css";
 
 function Login() {
-  return (
-    <div
-      className="container-fluid"
-      style={{
-        backgroundImage: `url(${login_background})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'row', 
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <div style={{fontSize: '200px',
-          padding: '50px',
-          fontFamily: 'roboto slab',
-          marginBottom: '20px',
-    }}
-            
-      >
-        <h4 className="card-title">Welcome to</h4>
-        <h2 className="card-subtitle mb-2">WMS</h2>
-      </div>
+  
+	const [data, setData] = useState({userEmail: "", password: ""});
+	const [error, setError] = useState("");
+	
 
-      {/* Login Card */}
-      <div className="card w-25">
-        <div className="card-body">
-          <h5 className="card-title">Login</h5>
-          <form>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                Email address
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                placeholder="Enter your email"
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Enter your password"
-              />
-            </div>
-            <button type="submit" className="btn btn-primary">
-              Login
-            </button>
-            <h4>don't have an account ?.<Link to = "/registration">Register</Link></h4>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-}
+	const handleChange = ({ currentTarget: input }) => {
+		setData({ ...data, [input.name]: input.value });
+	};
+
+	
+	function handleSubmit(e) {
+		e.preventDefault();
+		const url = "http://localhost:8080/login";
+		axios.post(url, data)
+			.then((res) => {
+				console.log(res.data.token);
+				localStorage.setItem("token", res.data.token);
+				localStorage.setItem("userType", res.data.userType);
+				console.log("login successful");
+			})
+			.then(() => {
+				window.location = "/profile";
+			})
+			.catch((error) => {
+				console.error("Error during login:", error);
+			});
+	}
+	
+
+	return (
+		<div className={styles.login_container}>
+			<div className={styles.login_form_container}>
+				<div className={styles.left}>
+					<form className={styles.form_container} onSubmit={handleSubmit}>
+						<h1>Login to Your Account</h1>
+						<input
+							type="email"
+							placeholder="Email"
+							name="userEmail"
+							onChange={handleChange}
+							value={data.userEmail}
+							required
+							className={styles.input}
+						/>
+						<input
+							type="password"
+							placeholder="Password"
+							name="password"
+							onChange={handleChange}
+							value={data.password}
+							required
+							className={styles.input}
+						/>
+						{error && <div className={styles.error_msg}>{error}</div>}
+						<button type="submit" className={styles.green_btn}>
+							Sing In
+						</button>
+					</form>
+				</div>
+				<div className={styles.right}>
+					<h1>New Here ?</h1>
+					<Link to="/signup">
+						<button type="button" className={styles.white_btn}>
+							Sing Up
+						</button>
+					</Link>
+				</div>
+			</div>
+		</div>
+	);
+};
 
 export default Login;

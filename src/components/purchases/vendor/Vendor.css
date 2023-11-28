@@ -1,0 +1,49 @@
+.navigation-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1677ff;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+}
+
+.left-section .ant-btn {
+    background-color: white;
+    border: none;
+    margin-right: 10px;
+}
+
+.right-section {
+    display: flex;
+}
+
+.right-section .ant-btn {
+    background-color: white;
+    border: none;
+    margin-right: 10px;
+}
+
+.right-section .ant-space {
+    display: flex;
+    align-items: center;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    padding: 20px;
+    height: 70%;
+}
+span{
+    font-weight: 500;
+}

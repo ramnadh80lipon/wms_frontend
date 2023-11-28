@@ -7,6 +7,7 @@ import truck from "../../icons/Truck.png";
 import file from "./final2.csv";
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Catalog() {
   const [showImportModal, setShowImportModal] = useState(false);
@@ -100,7 +101,7 @@ function Catalog() {
           >
             Import all
           </Button>
-          <Button
+          <Link to="/addproduct"><Button
             className="display-3"
             size=""
             variant="primary"
@@ -108,7 +109,7 @@ function Catalog() {
           >
             <i className="bi bi-plus-circle p-2" style={{ color: "#fff" }}></i>
             Add Product
-          </Button>
+          </Button></Link>
         </div>
       </div>
       <div className="second-headings mt-3">
@@ -149,7 +150,7 @@ function Catalog() {
         >
           Start adding products to see them listed here
         </p>
-        <Button
+        <Link to="/addproduct"><Button
           className="display-3"
           size=""
           variant="primary"
@@ -163,7 +164,7 @@ function Catalog() {
           }}
         >
           <i className="bi bi-plus-circle p-2"></i>Add Product
-        </Button>
+        </Button></Link>
         <a
           href=""
           style={{

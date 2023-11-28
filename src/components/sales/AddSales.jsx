@@ -21,7 +21,7 @@ function AddSales() {
           <Input type="number" style={{ width: '100%', alignItems:"flex-end"}} />
           <Select  style={{ width: '100%' }}>
             <Option value="%">% </Option>
-            <Option value="Rs.">Rs. </Option>
+            <Option value="Rs.">SAR. </Option>
           </Select>
         </Space>
       ),

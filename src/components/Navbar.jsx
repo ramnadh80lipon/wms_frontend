@@ -26,6 +26,9 @@ import icon from "../icons/icon_1.png";
 const Navbar = ({ isLoggedIn, onLogout }) => {
   const [activeMenu, setActiveMenu] = useState(true);
   const [screenSize, setScreenSize] = useState(undefined);
+  let userType = localStorage.getItem("userType");
+
+  console.log(userType,"user type");
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -36,6 +39,12 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const shouldShowMenuItem = (allowedRoles) => {
+    return allowedRoles.includes(userType);
+  };
+ 
+  console.log(localStorage);
 
   useEffect(() => {
     if (screenSize <= 800) {
@@ -88,6 +97,8 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
             defaultSelectedKeys={["1"]}
             mode="inline"
           >
+            {shouldShowMenuItem(["Admin","supervisor"]) && (
+              <>
             <Menu.Item key="1" icon={<HomeOutlined />}>
               <Link to="/" style={{ textDecoration: "none" }}>
                 Home
@@ -111,7 +122,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                 key="vendors"
                 icon={<TeamOutlined style={{ fontSize: "1rem" }} />}
               >
-                <Link to="/addVendor" style={{ textDecoration: "none" }}>
+                <Link to="/vendor" style={{ textDecoration: "none" }}>
                   Vendors
                 </Link>
               </Menu.Item>
@@ -119,7 +130,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                 key="purchase-orders"
                 icon={<MdDescription style={{ fontSize: "1rem" }} />}
               >
-                <Link to="/purchase-orders" style={{ textDecoration: "none" }}>
+                <Link to="/purchaseorder" style={{ textDecoration: "none" }}>
                   Purchase Orders
                 </Link>
               </Menu.Item>
@@ -128,7 +139,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                 icon={<MdAssignmentAdd style={{ fontSize: "1rem" }} />}
               >
                 <Link
-                  to="/purchase-receives"
+                  to="/purchasereceive"
                   style={{ textDecoration: "none" }}
                 >
                   Purchase Receives
@@ -138,7 +149,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                 key="purchase-bills"
                 icon={<MdDescription style={{ fontSize: "1rem" }} />}
               >
-                <Link to="/purchase-bills" style={{ textDecoration: "none" }}>
+                <Link to="/purchasebills" style={{ textDecoration: "none" }}>
                   Purchase Bills
                 </Link>
               </Menu.Item>
@@ -163,13 +174,22 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                 </Link>
               </Menu.Item>
             </Menu.SubMenu>
+            </>
+            )}
+            {shouldShowMenuItem(["Admin","supervisor","Employee","User"]) && (
+              <>
             <Menu.SubMenu
               key="inventory"
               icon={<MdOutlineStorage style={{ fontSize: "1rem" }} />}
               title="Inventory"
             >
+              <Menu.Item key="addproduct" icon={<AppstoreAddOutlined />}>
+                <Link to="/addproduct" style={{ textDecoration: "none" }}>
+                  Add Product
+                </Link>
+              </Menu.Item>
               <Menu.Item key="item" icon={<AppstoreAddOutlined />}>
-                <Link to="/items" style={{ textDecoration: "none" }}>
+                <Link to="/inventory/items" style={{ textDecoration: "none" }}>
                   Items
                 </Link>
               </Menu.Item>
@@ -178,50 +198,68 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                   Item Groups
                 </Link>
               </Menu.Item>
-              <Menu.Item key="inventoryadjustment" icon={<SettingOutlined />}>
+              {/* <Menu.Item key="inventoryadjustment" icon={<SettingOutlined />}>
                 <Link
                   to="/inventoryadjustment"
                   style={{ textDecoration: "none" }}
                 >
                   Inventory Adjustment
                 </Link>
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu.SubMenu>
 
             <Menu.Item
               key="3"
               icon={<MdStorefront style={{ fontSize: "1.2rem" }} />}
             >
-              <Link to="/news" style={{ textDecoration: "none" }}>
+              <Link to="/warehouse" style={{ textDecoration: "none" }}>
                 Warehouse
               </Link>
             </Menu.Item>
+            {shouldShowMenuItem(["Admin","supervisor"]) && (
+              <>
             <Menu.Item
               key="4"
               icon={<MdLocalShipping style={{ fontSize: "1.2rem" }} />}
             >
-              <Link to="/news" style={{ textDecoration: "none" }}>
+              <Link to="/logistic" style={{ textDecoration: "none" }}>
                 Logistics
               </Link>
             </Menu.Item>
+            <Menu.SubMenu
+              key="reports"
+              icon={<LineChartOutlined />}
+              title="Reports"
+            >
+              <Menu.Item key="bussinessanalytics" icon={<LineChartOutlined />}>
+                <Link to="/bussinessanalytics" style={{ textDecoration: "none" }}>
+                  Bussiness Analytics
+                </Link>
+              </Menu.Item>
+              
+            </Menu.SubMenu>
             <Menu.Item key="5" icon={<DollarOutlined />}>
               <Link to="/news" style={{ textDecoration: "none" }}>
                 Finances
               </Link>
             </Menu.Item>
+            </>
+            )}
+          
 
             {user ? (
               <Menu.Item key="6" icon={<UserOutlined />}>
                 <Link to="/profile" style={{ textDecoration: "none" }}>
                   Profile
                 </Link>
+                
               </Menu.Item>
             ) : (
               <Menu.Item
                 key="7"
                 icon={<MdLogin style={{ fontSize: "1.2rem" }} />}
               >
-                <Link to="/signin" style={{ textDecoration: "none" }}>
+                <Link to="/login" style={{ textDecoration: "none" }}>
                   LogIn
                 </Link>
               </Menu.Item>
@@ -230,7 +268,14 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
               <Menu.Item key="8" icon={<LogoutOutlined />} onClick={onLogout}>
                 Logout
               </Menu.Item>
+            )
+            }
+
+
+            
+            </>
             )}
+            
           </Menu>
         </div>
       )}

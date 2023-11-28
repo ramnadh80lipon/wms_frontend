@@ -39,7 +39,7 @@ function AddNewCustomer() {
     shippingaddressfax: "",
   });
   return (
-    <div style={{overflow:"hidden"}}>
+    <div style={{ overflow: "hidden" }}>
       <h4>Add New Customer</h4>
       <div>
         <label htmlFor="" style={{ paddingRight: "25px" }}>
@@ -55,11 +55,11 @@ function AddNewCustomer() {
           <Radio value="Individual">Individual</Radio>
         </Radio.Group>
       </div>
-      <div>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
         <label htmlFor="">Customer Name:</label>
         <Space wrap>
           <Select
-            placeholder="Salutation" 
+            placeholder="Salutation"
             style={{ margin: "10px", width: 120 }}
             onChange={(value) =>
               setFormData({ ...formData, salutation: value })
@@ -108,12 +108,12 @@ function AddNewCustomer() {
           }
         />
       </div>
-      <div>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
         <label htmlFor="">Customer Display Name:</label>
         <Space wrap>
           <Select
             placeholder="Salutation"
-            style={{ margin: "10px", width: 120 }}
+            style={{ margin: "10px"}}
             onChange={(value) =>
               setFormData({ ...formData, customerdisplayname: value })
             }
@@ -127,24 +127,25 @@ function AddNewCustomer() {
           />
         </Space>
       </div>
-      <div>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
         <label htmlFor="">Email:</label>
         <input
           type="text"
           placeholder="Email"
           className="form-control"
-          style={{ width: "25vw", margin: "1%", display: "inline-block" }}
+          style={{ width: "65vw", margin: "1%", display: "inline-block" }}
+          
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         />
       </div>
-      <div>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
         <label htmlFor="">Customer Phone:</label>
         <input
           type="text"
           placeholder="Workphone"
           className="form-control"
-          style={{ width: "25vw", margin: "1%", display: "inline-block" }}
+          style={{ width: "32vw", margin: "1%", display: "inline-block" }}
           value={formData.workphone}
           onChange={(e) =>
             setFormData({ ...formData, workphone: e.target.value })
@@ -154,7 +155,7 @@ function AddNewCustomer() {
           type="text"
           placeholder="Phone"
           className="form-control"
-          style={{ width: "25vw", margin: "1%", display: "inline-block" }}
+          style={{ width: "32vw", margin: "1%", display: "inline-block" }}
           value={formData.mobile}
           onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
         />
@@ -310,7 +311,7 @@ function AddNewCustomer() {
         <hr />
       </div>
 
-      <div id="address" style={{ position: "relative" }}>
+      <div id="address" style={{ position: "relative", marginBottom: "100px" }}>
         <h5>Address:</h5>
 
         <hr />
@@ -387,7 +388,6 @@ function AddNewCustomer() {
               }
             />
           </div>
-
 
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <label htmlFor="">City</label>
@@ -604,7 +604,7 @@ function AddNewCustomer() {
             />
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between" }}  >
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
             <label htmlFor="">Zip:</label>
             <input
               type="text"
@@ -665,8 +665,18 @@ function AddNewCustomer() {
         </div>
       </div>
 
-      <div style={{backgroundColor:"white",display:"block",padding:"1%",width:"100%",position:"fixed",bottom:"0",margin:"auto"}}>
-        <Button type="primary" size="large" >
+      <div
+        style={{
+          backgroundColor: "white",
+          display: "block",
+          padding: "1%",
+          width: "100%",
+          position: "fixed",
+          bottom: "0",
+          margin: "auto",
+        }}
+      >
+        <Button type="primary" size="large">
           Save
         </Button>
         <Button
