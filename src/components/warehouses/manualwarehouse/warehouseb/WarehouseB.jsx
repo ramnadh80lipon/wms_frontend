@@ -18,7 +18,7 @@ const WarehouseB = () => {
   // Quantities for Amazon, Warehouse, and Inventory
   
   const navigate = useNavigate();
-  const warehouseName = "warehouse 2";
+  const warehouseName = "WAREHOUSE 2";
 
   
 
