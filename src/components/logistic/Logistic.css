@@ -1,0 +1,27 @@
+/* Logistic.css */
+
+.warehouse {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .card-warehouse {
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    width: 200px; /* Set a fixed width for the image container */
+  }
+  
+  .card-warehouse img {
+    max-width: 100%;
+    height: auto;
+    max-height: 150px; /* Adjust this value to fit your design */
+    margin-bottom: 10px;
+  }
+  
+  .card-title {
+    font-size: 18px;
+  }
+  

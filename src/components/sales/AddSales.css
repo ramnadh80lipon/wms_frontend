@@ -1,0 +1,29 @@
+.FormData{
+    display:inline-block;
+    margin: auto;
+    width: 100vw;
+}
+.TotalAmount{
+    float: right;
+    background-color: #EEECEA;
+    margin-left: auto;
+    width: 470px;;
+    padding-left:20px;
+    border-radius:10px;
+     padding-right:20px;
+     margin-right: 5%;
+}
+.Note{
+    float: left;
+    width:35%;
+}
+.Save-Cancel{
+    background-color:white;
+    display:block;
+    padding:1%;
+    width:100%;
+    position:fixed;
+    bottom:0;
+    margin:auto;
+    box-shadow:10px 5px 5px 5px;
+}
